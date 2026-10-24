@@ -1,0 +1,72 @@
+<!doctype html>
+<!-- English reel template (left to right). For Arabic, see reel.html.
+     Replace the sample scenes with the script from plan.md: one .scene per beat, timed with data-start/data-end.
+     Keep text inside .safe. The hook scene must move from frame 0 and land its claim at about 1.2 to 1.6 s. -->
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="reel-duration" content="20">
+  <meta name="reel-fps" content="30">
+  <title>reel</title>
+  <link rel="stylesheet" href="reel.css">
+</head>
+<body>
+  <div class="stage">
+
+    <!-- Background motion under every scene -->
+    <div class="blob drift" data-start="0"></div>
+
+    <!-- 0 to 3 s: the hook. Moving from frame 0; the claim lands word by word from 1.2 s. -->
+    <section class="scene" data-start="0" data-end="3">
+      <div class="safe">
+        <div class="num slam">3</div>
+        <p class="hook words" style="--from: 1.2s">mistakes that make you charge less than you're worth</p>
+      </div>
+    </section>
+
+    <section class="scene" data-start="3" data-end="8">
+      <div class="safe">
+        <p class="big rise"><span class="accent">1.</span> You charge by the hour</p>
+        <p class="body rise muted" style="animation-delay: .4s">Clients pay for the result, not your time</p>
+      </div>
+    </section>
+
+    <section class="scene" data-start="8" data-end="13">
+      <div class="safe">
+        <p class="big rise"><span class="accent">2.</span> You have no packages</p>
+        <p class="body rise muted" style="animation-delay: .4s">Three tiers make the decision easy</p>
+      </div>
+    </section>
+
+    <section class="scene" data-start="13" data-end="17">
+      <div class="safe">
+        <p class="big rise"><span class="accent">3.</span> You quote before you understand the project</p>
+      </div>
+    </section>
+
+    <!-- CTA: serves the page goal in creator/page.md -->
+    <section class="scene" data-start="17" data-end="20">
+      <div class="safe">
+        <p class="big pop">Comment <span class="accent">PRICE</span></p>
+        <p class="body rise muted" style="animation-delay: .35s">and I'll send you the free pricing calculator</p>
+      </div>
+    </section>
+
+    <div id="captions"></div>
+
+    <!-- Cover (?mode=cover): the hook in a few words, inside the 3:4 grid crop -->
+    <section class="cover">
+      <div class="safe">
+        <div class="num">3</div>
+        <p class="hook">pricing mistakes costing you money</p>
+      </div>
+    </section>
+
+    <div class="guide"></div>
+  </div>
+
+  <!-- Captions timed to the voiceover. Get timings from a transcript of the recorded voice. -->
+  <script type="application/json" id="captions-data">[]</script>
+  <script src="reel.js"></script>
+</body>
+</html>

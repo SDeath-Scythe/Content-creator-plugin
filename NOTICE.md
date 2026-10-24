@@ -12,6 +12,15 @@ These files are copied into `skills/` by [`scripts/vendor.sh`](scripts/vendor.sh
 | [claude-content-skills](https://github.com/Ootto-AI/claude-content-skills), © 2026 Ootto | virality, going-viral, hook-mining | [MIT](third_party/ootto-claude-content-skills/LICENSE) | Note added |
 | [ootto-watch](https://github.com/Ootto-AI/ootto-watch), © 2026 Ootto-AI | watch-reel | [MIT](third_party/ootto-watch/LICENSE) | Renamed from `watch-video`; note added |
 
+## Fonts
+
+In [`assets/fonts/`](assets/fonts), unmodified apart from the variable font's file name, from [google/fonts](https://github.com/google/fonts). Both are under the SIL Open Font License 1.1; each licence file sits next to its font.
+
+| Font | Copyright | Licence |
+| --- | --- | --- |
+| IBM Plex Sans Arabic (Regular, Bold) | © 2017 IBM Corp., Reserved Font Name "Plex" | [OFL 1.1](assets/fonts/OFL-ibmplexsansarabic.txt) |
+| Noto Kufi Arabic (variable weight; file renamed from `NotoKufiArabic[wght].ttf`) | © 2022 The Noto Project Authors | [OFL 1.1](assets/fonts/OFL-notokufiarabic.txt) |
+
 ## Dependencies (installed separately, not bundled)
 
 Listed in this repo's marketplace at pinned commits ([`scripts/pin-companions.py`](scripts/pin-companions.py) updates them). Their code stays in their own repositories under their own licences.
