@@ -67,7 +67,7 @@ for s in "${SMS_SKILLS[@]}"; do
 > **Bundled in content-creator** from [social-media-skills](${SMS_REPO}) v${SMS_VERSION} (MIT, Frank Heijdenrijk). The text below this note is unchanged. In this plugin:
 > - **Publishing** goes through the \`publish\` skill (Composio, or a manual post), not WoopSocial. Read every WoopSocial mention as that step.
 > - **Files** such as \`brand-profile.md\`, \`voice.md\`, \`audience.md\` and \`content-pillars.md\` live in the \`creator/\` folder of the user's project.
-> - **Other skills** named below that this plugin doesn't bundle are optional: use them if installed, otherwise skip that step. Links to \`tools/integrations/\` point at the upstream repo.
+> - **Other skills** named below that this plugin doesn't bundle are optional: use them if installed, otherwise do that step directly. Reel safe areas and upload specs are in \`render-reel\`. Links to \`tools/integrations/\` point at the upstream repo.
 EOF
 done
 
