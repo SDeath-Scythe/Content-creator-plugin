@@ -54,7 +54,7 @@ add_note() { # add_note <SKILL.md>
 copy_skill() { # copy_skill <src dir> <dest name>
   rm -rf "$SKILLS/$2"
   mkdir -p "$SKILLS/$2"
-  (cd "$1" && tar --exclude=./evals -cf - .) | (cd "$SKILLS/$2" && tar -xf -)
+  (cd "$1" && tar --exclude=./evals --exclude=./.git -cf - .) | (cd "$SKILLS/$2" && tar -xf -)
 }
 
 fetch "$SMS_REPO" "$SMS_REF" "$TMP/sms"
