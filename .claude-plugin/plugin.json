@@ -6,9 +6,23 @@
     "name": "Salih Safa Mohammed",
     "url": "https://github.com/SDeath-Scythe"
   },
-  "homepage": "https://github.com/SDeath-Scythe/content-creator-plugin",
-  "repository": "https://github.com/SDeath-Scythe/content-creator-plugin",
+  "homepage": "https://github.com/SDeath-Scythe/Content-creator-plugin",
+  "repository": "https://github.com/SDeath-Scythe/Content-creator-plugin",
   "license": "MIT",
-  "keywords": ["instagram", "reels", "tiktok", "youtube-shorts", "content", "video", "hooks", "social-media"],
-  "dependencies": ["remotion", "hyperframes", "impeccable"]
+  "keywords": [
+    "instagram",
+    "reels",
+    "tiktok",
+    "youtube-shorts",
+    "content",
+    "video",
+    "hooks",
+    "social-media"
+  ],
+  "dependencies": [
+    "remotion",
+    "hyperframes",
+    "impeccable"
+  ],
+  "privacyPolicyUrl": "https://github.com/SDeath-Scythe/Content-creator-plugin#privacy"
 }
