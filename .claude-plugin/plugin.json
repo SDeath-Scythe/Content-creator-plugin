@@ -1,0 +1,14 @@
+{
+  "name": "content-creator",
+  "version": "0.1.0",
+  "description": "Plan, script, build and post short-form video for Instagram, TikTok and YouTube: daily ideas, hooks checked against an 8-point rule, scripts, rendered reels, and approval before anything is posted.",
+  "author": {
+    "name": "Salih Safa Mohammed",
+    "url": "https://github.com/SDeath-Scythe"
+  },
+  "homepage": "https://github.com/SDeath-Scythe/content-creator-plugin",
+  "repository": "https://github.com/SDeath-Scythe/content-creator-plugin",
+  "license": "MIT",
+  "keywords": ["instagram", "reels", "tiktok", "youtube-shorts", "content", "video", "hooks", "social-media"],
+  "dependencies": ["remotion", "hyperframes", "impeccable"]
+}

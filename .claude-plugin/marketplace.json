@@ -1,0 +1,54 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "content-creator",
+  "owner": {
+    "name": "Salih Safa Mohammed",
+    "url": "https://github.com/SDeath-Scythe"
+  },
+  "metadata": {
+    "description": "content-creator and the video plugins it builds on."
+  },
+  "plugins": [
+    {
+      "name": "content-creator",
+      "source": "./",
+      "description": "Plan, script, build and post short-form video for Instagram, TikTok and YouTube, with approval before anything is posted.",
+      "category": "productivity",
+      "homepage": "https://github.com/SDeath-Scythe/content-creator-plugin"
+    },
+    {
+      "name": "remotion",
+      "source": {
+        "source": "github",
+        "repo": "remotion-dev/claude-code-plugin",
+        "sha": "f4cfab3c9c2d27888d45fd29fd1b6df8386b8f24"
+      },
+      "description": "Remotion: programmatic video with React. Dependency of content-creator.",
+      "category": "design",
+      "homepage": "https://www.remotion.dev/docs/ai/claude-code-plugin"
+    },
+    {
+      "name": "hyperframes",
+      "source": {
+        "source": "github",
+        "repo": "heygen-com/hyperframes",
+        "sha": "da4386f0d06955cbdd09bce5a6e837f4c657654f"
+      },
+      "description": "HyperFrames by HeyGen: write HTML, render video. Dependency of content-creator.",
+      "category": "design",
+      "homepage": "https://hyperframes.heygen.com"
+    },
+    {
+      "name": "impeccable",
+      "source": {
+        "source": "git-subdir",
+        "url": "pbakaus/impeccable",
+        "path": "plugin",
+        "sha": "936867543ac2576920d663cc9803597f6044f3ac"
+      },
+      "description": "Impeccable by Paul Bakaus: design guidance and anti-pattern checks. Dependency of content-creator.",
+      "category": "design",
+      "homepage": "https://impeccable.style"
+    }
+  ]
+}
