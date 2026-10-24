@@ -1,0 +1,235 @@
+<!doctype html>
+<!-- Graduation report reel, 15 s, English. Built from render-reel's template.
+     The table-of-contents rows reorder on a 15 s timeline; their keyframes come from gen.py. -->
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="reel-duration" content="15">
+  <meta name="reel-fps" content="30">
+  <title>reel</title>
+  <!-- reel.css, reel.js and fonts/ come from the plugin when they aren't next to this file -->
+  <link rel="stylesheet" href="reel.css">
+  <style>
+    :root {
+      --bg: #0E1226; --fg: #FFFFFF; --accent: #FFD43B; --muted: rgba(255, 255, 255, .74);
+      --paper: #FBF8F1; --ink: #1A1E36; --ink-soft: #6B6F86; --red: #E5484D; --green: #22B07D;
+      --hl: rgba(255, 212, 59, .55);
+      --size-big: 92px; --size-body: 54px;
+    }
+
+    /* Top text area: y 250 to 610 */
+    .top { position: absolute; top: var(--safe-top); left: var(--safe-left); right: var(--safe-right); height: 360px;
+           display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+    .top > * { margin: 0; flex-shrink: 0; }
+    .hook { font-size: 104px; line-height: 1.08; letter-spacing: -1px; }
+    .step { font-family: var(--display); font-weight: 900; font-size: var(--size-big); line-height: 1.08; }
+    .step .n { color: var(--accent); }
+    .kicker { font-size: 40px; font-weight: 700; letter-spacing: 6px; color: var(--accent); text-transform: uppercase; }
+
+    /* The report's contents page: y 650 to 1490 */
+    .paper { position: absolute; left: var(--safe-left); right: var(--safe-right); top: 650px; height: 840px;
+             background: var(--paper); color: var(--ink); border-radius: 26px; padding: 44px 44px 0;
+             box-shadow: 0 40px 90px rgba(0, 0, 0, .45); transform-origin: 50% 0;
+             animation: paper-in .55s cubic-bezier(.2, .9, .25, 1) both; }
+    @keyframes paper-in { from { transform: scale(1.14) rotate(-2.5deg) translateY(-30px); } to { transform: none; } }
+    .doc-label { font-size: 30px; font-weight: 700; letter-spacing: 4px; color: var(--ink-soft); text-transform: uppercase; }
+    .doc-title { font-family: var(--display); font-size: 60px; font-weight: 800; margin: 6px 0 22px; }
+    .toc { list-style: none; margin: 0; padding: 0; position: relative; }
+    .row { display: flex; align-items: center; gap: 22px; height: 100px; margin-bottom: 12px; padding: 0 18px;
+           border-radius: 16px; font-size: 46px; font-weight: 700; position: relative; }
+    .toc .row { height: 94px; margin-bottom: 10px; z-index: 1; }
+    .toc .row:first-child { z-index: 0; } /* Introduction gets pushed down; the rows moving up pass over it */
+    .toc .row { background-clip: padding-box; }
+    .ch { width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: var(--paper);
+          display: grid; place-items: center; font-size: 36px; flex-shrink: 0; }
+    .title { white-space: nowrap; }
+    /* 0.35 to 1.6 s: the chapter numbers tick red one by one, 1 to 6: "in order" before the words say it */
+    .ch { animation: tick .35s ease-out both; animation-delay: calc(.35s + var(--k) * .2s); }
+    @keyframes tick { 0% { background: var(--ink); transform: scale(1); } 35% { background: var(--red); transform: scale(1.35); }
+                      100% { background: var(--ink); transform: scale(1); } }
+    .cover-mode .ch { animation: none !important; }
+    .dots { flex: 1; border-bottom: 5px dotted #C9C6BE; transform: translateY(12px); }
+    .pg { color: var(--ink-soft); font-weight: 400; width: 56px; text-align: right; }
+    .tag { position: absolute; right: 10px; top: 50%; margin-top: -32px; height: 64px; padding: 0 22px; border-radius: 32px;
+           background: var(--green); color: #fff; font-size: 34px; font-weight: 800; display: grid; place-items: center;
+           animation: tag-in .3s cubic-bezier(.2, .9, .3, 1.4) both; }
+    .tag:empty { display: none; }
+    @keyframes tag-in { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: none; } }
+@keyframes row0 {
+  0.000% { transform: translate(0px, 0px) rotate(0deg); }
+  15.333% { transform: translate(0px, 0px) rotate(0deg); }
+  16.333% { transform: translate(-18px, 0px) rotate(-3deg); }
+  19.667% { transform: translate(-12.6px, 0px) rotate(-2.0999999999999996deg); }
+  20.000% { transform: translate(-12.6px, 0px) rotate(-2.0999999999999996deg); }
+  23.333% { transform: translate(0px, 208px) rotate(0deg); }
+  36.667% { transform: translate(0px, 208px) rotate(0deg); }
+  40.000% { transform: translate(0px, 312px) rotate(0deg); }
+  53.333% { transform: translate(0px, 312px) rotate(0deg); }
+  56.667% { transform: translate(0px, 416px) rotate(0deg); }
+  70.000% { transform: translate(0px, 416px) rotate(0deg); }
+  73.333% { transform: translate(0px, 520px) rotate(0deg); }
+  100.000% { transform: translate(0px, 520px) rotate(0deg); }
+}
+@keyframes hl0 { 0%, 69.933% { background: transparent; } 70.000%, 80.667% { background: var(--hl); } 84.667%, 100% { background: transparent; } }
+.row:nth-child(1) { animation: row0 15.0s linear both, hl0 15.0s linear both; }
+.row:nth-child(1) .tag { animation-delay: 11.0s; }
+@keyframes row1 {
+  0.000% { transform: translate(0px, 0px) rotate(0deg); }
+  15.333% { transform: translate(0px, 0px) rotate(0deg); }
+  16.333% { transform: translate(14px, 0px) rotate(2.5deg); }
+  19.667% { transform: translate(9.799999999999999px, 0px) rotate(1.75deg); }
+  20.000% { transform: translate(9.799999999999999px, 0px) rotate(1.75deg); }
+  23.333% { transform: translate(0px, 208px) rotate(0deg); }
+  36.667% { transform: translate(0px, 208px) rotate(0deg); }
+  40.000% { transform: translate(0px, 312px) rotate(0deg); }
+  53.333% { transform: translate(0px, 312px) rotate(0deg); }
+  56.667% { transform: translate(0px, 208px) rotate(0deg); }
+  100.000% { transform: translate(0px, 208px) rotate(0deg); }
+}
+@keyframes hl1 { 0%, 53.267% { background: transparent; } 53.333%, 64.000% { background: var(--hl); } 68.000%, 100% { background: transparent; } }
+.row:nth-child(2) { animation: row1 15.0s linear both, hl1 15.0s linear both; }
+.row:nth-child(2) .tag { animation-delay: 8.5s; }
+@keyframes row2 {
+  0.000% { transform: translate(0px, 0px) rotate(0deg); }
+  15.333% { transform: translate(0px, 0px) rotate(0deg); }
+  16.333% { transform: translate(-10px, 0px) rotate(-2deg); }
+  19.667% { transform: translate(-7.0px, 0px) rotate(-1.4deg); }
+  20.000% { transform: translate(-7.0px, 0px) rotate(-1.4deg); }
+  23.333% { transform: translate(0px, -208px) rotate(0deg); }
+  100.000% { transform: translate(0px, -208px) rotate(0deg); }
+}
+@keyframes hl2 { 0%, 19.933% { background: transparent; } 20.000%, 30.667% { background: var(--hl); } 34.667%, 100% { background: transparent; } }
+.row:nth-child(3) { animation: row2 15.0s linear both, hl2 15.0s linear both; }
+.row:nth-child(3) .tag { animation-delay: 3.5s; }
+@keyframes row3 {
+  0.000% { transform: translate(0px, 0px) rotate(0deg); }
+  15.333% { transform: translate(0px, 0px) rotate(0deg); }
+  16.333% { transform: translate(20px, 0px) rotate(3deg); }
+  19.667% { transform: translate(14.0px, 0px) rotate(2.0999999999999996deg); }
+  20.000% { transform: translate(14.0px, 0px) rotate(2.0999999999999996deg); }
+  23.333% { transform: translate(0px, -208px) rotate(0deg); }
+  100.000% { transform: translate(0px, -208px) rotate(0deg); }
+}
+@keyframes hl3 { 0%, 19.933% { background: transparent; } 20.000%, 30.667% { background: var(--hl); } 34.667%, 100% { background: transparent; } }
+.row:nth-child(4) { animation: row3 15.0s linear both, hl3 15.0s linear both; }
+.row:nth-child(4) .tag { animation-delay: 3.5s; }
+@keyframes row4 {
+  0.000% { transform: translate(0px, 0px) rotate(0deg); }
+  15.333% { transform: translate(0px, 0px) rotate(0deg); }
+  16.333% { transform: translate(-14px, 0px) rotate(-2.5deg); }
+  19.667% { transform: translate(-9.799999999999999px, 0px) rotate(-1.75deg); }
+  23.333% { transform: translate(0px, 0px) rotate(0deg); }
+  36.667% { transform: translate(0px, 0px) rotate(0deg); }
+  40.000% { transform: translate(0px, -208px) rotate(0deg); }
+  100.000% { transform: translate(0px, -208px) rotate(0deg); }
+}
+@keyframes hl4 { 0%, 36.600% { background: transparent; } 36.667%, 47.333% { background: var(--hl); } 51.333%, 100% { background: transparent; } }
+.row:nth-child(5) { animation: row4 15.0s linear both, hl4 15.0s linear both; }
+.row:nth-child(5) .tag { animation-delay: 6.0s; }
+@keyframes row5 {
+  0.000% { transform: translate(0px, 0px) rotate(0deg); }
+  15.333% { transform: translate(0px, 0px) rotate(0deg); }
+  16.333% { transform: translate(10px, 0px) rotate(2deg); }
+  19.667% { transform: translate(7.0px, 0px) rotate(1.4deg); }
+  23.333% { transform: translate(0px, 0px) rotate(0deg); }
+  70.000% { transform: translate(0px, 0px) rotate(0deg); }
+  73.333% { transform: translate(0px, -104px) rotate(0deg); }
+  100.000% { transform: translate(0px, -104px) rotate(0deg); }
+}
+@keyframes hl5 { 0%, 69.933% { background: transparent; } 70.000%, 80.667% { background: var(--hl); } 84.667%, 100% { background: transparent; } }
+.row:nth-child(6) { animation: row5 15.0s linear both, hl5 15.0s linear both; }
+.row:nth-child(6) .tag { animation-delay: 11.0s; }
+
+    /* Stamps */
+    .stamp { position: absolute; left: 50%; top: 1010px; width: 760px; margin-left: -420px; text-align: center;
+             font-family: var(--display); font-weight: 900; font-size: 104px; letter-spacing: 2px; padding: 8px 0 14px;
+             border: 12px solid currentColor; border-radius: 22px; color: var(--red); background: rgba(251, 248, 241, .82);
+             animation: stamp .28s cubic-bezier(.3, 1.6, .5, 1) both; }
+    .stamp.ok { color: var(--green); width: 820px; margin-left: -450px; font-size: 92px; }
+    @keyframes stamp { from { opacity: 0; transform: rotate(-12deg) scale(2.4); } to { opacity: 1; transform: rotate(-9deg) scale(1); } }
+
+    .cta-word { display: inline-block; background: var(--accent); color: var(--bg); padding: 0 22px; border-radius: 16px; }
+
+    /* Cover: the paper sits still, the hook above it */
+    .cover-mode .paper, .cover-mode .row, .cover-mode .tag { animation: none !important; }
+    .cover-mode .tag { display: none; }
+    .cover .hook { font-size: 112px; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="blob drift" data-start="0"></div>
+
+    <!-- Persistent: the contents page, from frame 0 to the end -->
+    <div class="paper" data-start="0">
+      <div class="doc-label">Graduation Report</div>
+      <div class="doc-title">Table of Contents</div>
+      <ol class="toc">
+          <li class="row"><span class="ch" style="--k: 0">1</span><span class="title">Introduction</span><span class="dots"></span><span class="pg">1</span><span class="tag">LAST</span></li>
+          <li class="row"><span class="ch" style="--k: 1">2</span><span class="title">Literature Review</span><span class="dots"></span><span class="pg">6</span><span class="tag">3rd</span></li>
+          <li class="row"><span class="ch" style="--k: 2">3</span><span class="title">Methodology</span><span class="dots"></span><span class="pg">19</span><span class="tag">1st</span></li>
+          <li class="row"><span class="ch" style="--k: 3">4</span><span class="title">Implementation</span><span class="dots"></span><span class="pg">31</span><span class="tag">1st</span></li>
+          <li class="row"><span class="ch" style="--k: 4">5</span><span class="title">Results & Testing</span><span class="dots"></span><span class="pg">52</span><span class="tag">2nd</span></li>
+          <li class="row"><span class="ch" style="--k: 5">6</span><span class="title">Conclusion</span><span class="dots"></span><span class="pg">67</span><span class="tag">4th</span></li>
+      </ol>
+    </div>
+
+    <!-- 0 to 3 s: hook. Paper slams in at frame 0; claim lands from 1.0 s; the stamp breaks the list at 2.3 s -->
+    <section class="scene" data-start="0" data-end="3">
+      <div class="top">
+        <p class="hook big words" style="--from: 1.0s; --stagger: .09s">Stop writing your report in this order.</p>
+      </div>
+      <div class="stamp" style="animation-delay: 2.3s">WRONG ORDER</div>
+    </section>
+
+    <section class="scene" data-start="3" data-end="5.5">
+      <div class="top">
+        <p class="step rise"><span class="n">1.</span> Write what you built</p>
+        <p class="body rise muted" style="animation-delay: .15s">Methodology + implementation. You know them best.</p>
+      </div>
+    </section>
+
+    <section class="scene" data-start="5.5" data-end="8">
+      <div class="top">
+        <p class="step rise"><span class="n">2.</span> Then your results</p>
+        <p class="body rise muted" style="animation-delay: .15s">Tests, screenshots, numbers. While they're fresh.</p>
+      </div>
+    </section>
+
+    <section class="scene" data-start="8" data-end="10.5">
+      <div class="top">
+        <p class="step rise"><span class="n">3.</span> Now the literature review</p>
+        <p class="body rise muted" style="animation-delay: .15s">You finally know what to search for.</p>
+      </div>
+    </section>
+
+    <section class="scene" data-start="10.5" data-end="12.5">
+      <div class="top">
+        <p class="step rise"><span class="n">4.</span> Introduction goes <span class="n">last</span></p>
+        <p class="body rise muted" style="animation-delay: .15s">It's easy to introduce what's already written.</p>
+      </div>
+    </section>
+
+    <!-- CTA: the page goal is leads (the report template) -->
+    <section class="scene" data-start="12.5" data-end="15">
+      <div class="top">
+        <p class="step pop">Comment <span class="cta-word">REPORT</span></p>
+        <p class="body rise muted" style="animation-delay: .2s">I'll send you the chapter-by-chapter template.</p>
+      </div>
+      <div class="stamp ok" style="animation-delay: .35s">RIGHT ORDER</div>
+    </section>
+
+    <section class="cover">
+      <div class="top">
+        <p class="hook big">Stop writing your report in this order.</p>
+      </div>
+      <div class="stamp" style="animation: none; transform: rotate(-9deg)">WRONG ORDER</div>
+    </section>
+
+    <div class="guide"></div>
+  </div>
+
+  <script type="application/json" id="captions-data">[]</script>
+  <script src="reel.js"></script>
+</body>
+</html>

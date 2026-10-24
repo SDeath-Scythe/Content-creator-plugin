@@ -1,0 +1,141 @@
+<!doctype html>
+<!-- Graduation project reel, 15 s, English. Built from render-reel's template.
+     The semester-plan rows move and change text on a 15 s timeline; their keyframes come from gen.py. -->
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="reel-duration" content="15">
+  <meta name="reel-fps" content="30">
+  <title>reel</title>
+  <!-- reel.css, reel.js and fonts/ come from the plugin when they aren't next to this file -->
+  <link rel="stylesheet" href="reel.css">
+  <style>
+    :root {
+      --bg: #0E1226; --fg: #FFFFFF; --accent: #FFD43B; --muted: rgba(255, 255, 255, .74);
+      --paper: #FBF8F1; --ink: #1A1E36; --ink-soft: #6B6F86; --red: #E5484D; --green: #22B07D;
+      --hl: rgba(255, 212, 59, .55);
+      --size-big: 88px; --size-body: 52px;
+    }
+
+    /* Top text area: y 250 to 610 */
+    .top { position: absolute; top: var(--safe-top); left: var(--safe-left); right: var(--safe-right); height: 360px;
+           display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+    .top > * { margin: 0; flex-shrink: 0; }
+    .hook { font-size: 102px; line-height: 1.08; letter-spacing: -1px; }
+    .step { font-family: var(--display); font-weight: 900; font-size: var(--size-big); line-height: 1.08; }
+    .step .n { color: var(--accent); }
+
+    /* The semester plan: y 650 to about 1440 */
+    .paper { position: absolute; left: var(--safe-left); right: var(--safe-right); top: 645px; height: 840px;
+             background: var(--paper); color: var(--ink); border-radius: 26px; padding: 44px 40px 0;
+             box-shadow: 0 40px 90px rgba(0, 0, 0, .45); transform-origin: 50% 0;
+             animation: paper-in .55s cubic-bezier(.2, .9, .25, 1) both; }
+    @keyframes paper-in { from { transform: scale(1.14) rotate(-2.5deg) translateY(-30px); } to { transform: none; } }
+    .doc-label { font-size: 30px; font-weight: 700; letter-spacing: 4px; color: var(--ink-soft); text-transform: uppercase; }
+    .doc-title { font-family: var(--display); font-size: 60px; font-weight: 800; margin: 6px 0 26px; }
+    .plan { list-style: none; margin: 0; padding: 0; position: relative; }
+    .row { position: relative; height: 110px; margin-bottom: 14px; padding: 0 16px; border-radius: 18px;
+           font-size: 44px; font-weight: 700; z-index: 1; }
+    .row.learn, .row.design, .row.test { z-index: 0; } /* rows that get pushed down pass under the ones moving up */
+    .row > .before, .row > .after, .row > .only { position: absolute; inset: 0 16px; display: flex; align-items: center; gap: 22px; }
+    .pill { flex-shrink: 0; min-width: 150px; height: 64px; padding: 0 18px; border-radius: 32px; background: var(--ink); color: var(--paper);
+            display: grid; place-items: center; font-size: 32px; font-weight: 800;
+            animation: tick .35s ease-out both; animation-delay: calc(.35s + var(--k) * .22s); }
+    @keyframes tick { 0% { transform: scale(1); background: var(--ink); } 35% { transform: scale(1.25); background: var(--red); }
+                      100% { transform: scale(1); background: var(--ink); } }
+    .text { white-space: nowrap; }
+    .report .before .text { color: var(--red); }
+    .report .before .pill { box-shadow: 0 0 0 5px var(--red); }
+    .after .pill { background: var(--green); animation: none; }
+    .before { animation: swap-out .35s ease-in both; }
+    .after { animation: swap-in .4s cubic-bezier(.2, .9, .3, 1.2) both; }
+    @keyframes swap-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-30px); } }
+    @keyframes swap-in { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+    .tag { position: absolute; right: 8px; top: 50%; margin-top: -30px; height: 60px; padding: 0 20px; border-radius: 30px;
+           background: var(--green); color: #fff; font-size: 32px; font-weight: 800; display: grid; place-items: center;
+           animation: tag-in .3s cubic-bezier(.2, .9, .3, 1.4) both; }
+    .tag:empty { display: none; }
+    @keyframes tag-in { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: none; } }
+/*ROWS_CSS*/
+
+    /* Stamps */
+    .stamp { position: absolute; left: 50%; top: 980px; width: 760px; margin-left: -420px; text-align: center;
+             font-family: var(--display); font-weight: 900; font-size: 104px; letter-spacing: 2px; padding: 8px 0 14px;
+             border: 12px solid currentColor; border-radius: 22px; color: var(--red); background: rgba(251, 248, 241, .82);
+             animation: stamp .28s cubic-bezier(.3, 1.6, .5, 1) both; }
+    .stamp.ok { color: var(--green); width: 820px; margin-left: -450px; font-size: 92px; }
+    @keyframes stamp { from { opacity: 0; transform: rotate(-12deg) scale(2.4); } to { opacity: 1; transform: rotate(-9deg) scale(1); } }
+
+    .cta-word { display: inline-block; background: var(--accent); color: var(--bg); padding: 0 22px; border-radius: 16px; }
+
+    /* Cover: the plan sits still under the hook */
+    .cover-mode .paper, .cover-mode .row, .cover-mode .pill, .cover-mode .before { animation: none !important; }
+    .cover-mode .after, .cover-mode .tag { display: none; }
+    .cover .hook { font-size: 96px; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="blob drift" data-start="0"></div>
+
+    <!-- Persistent: the student's semester plan, from frame 0 to the end -->
+    <div class="paper" data-start="0">
+      <div class="doc-label">Graduation Project</div>
+      <div class="doc-title">My semester plan</div>
+      <ol class="plan">
+<!--ROWS_HTML-->
+      </ol>
+    </div>
+
+    <!-- 0 to 3 s: hook. Plan slams in at frame 0; weeks tick red 0.35 to 1.5 s; claim from 1.0 s; stamp at 2.3 s -->
+    <section class="scene" data-start="0" data-end="3">
+      <div class="top">
+        <p class="hook big words" style="--from: 1.0s; --stagger: .09s">Your graduation project plan is backwards.</p>
+      </div>
+      <div class="stamp" style="animation-delay: 2.3s">WRONG ORDER</div>
+    </section>
+
+    <section class="scene" data-start="3" data-end="6">
+      <div class="top">
+        <p class="step rise"><span class="n">1.</span> Build a tiny version first</p>
+        <p class="body rise muted" style="animation-delay: .15s">One feature working end to end. Then grow it.</p>
+      </div>
+    </section>
+
+    <section class="scene" data-start="6" data-end="9">
+      <div class="top">
+        <p class="step rise"><span class="n">2.</span> Learn only what you need next</p>
+        <p class="body rise muted" style="animation-delay: .15s">Not every framework before you start.</p>
+      </div>
+    </section>
+
+    <section class="scene" data-start="9" data-end="12">
+      <div class="top">
+        <p class="step rise"><span class="n">3.</span> Write the report as you build</p>
+        <p class="body rise muted" style="animation-delay: .15s">Every feature you finish is a section done.</p>
+      </div>
+    </section>
+
+    <!-- CTA: the page goal is leads (the week-by-week plan) -->
+    <section class="scene" data-start="12" data-end="15">
+      <div class="top">
+        <p class="step pop">Comment <span class="cta-word">PROJECT</span></p>
+        <p class="body rise muted" style="animation-delay: .2s">I'll send you the week-by-week plan + report template.</p>
+      </div>
+      <div class="stamp ok" style="animation-delay: .35s">RIGHT ORDER</div>
+    </section>
+
+    <section class="cover">
+      <div class="top">
+        <p class="hook big">Your graduation project plan is backwards.</p>
+      </div>
+      <div class="stamp" style="animation: none; transform: rotate(-9deg)">WRONG ORDER</div>
+    </section>
+
+    <div class="guide"></div>
+  </div>
+
+  <script type="application/json" id="captions-data">[]</script>
+  <script src="reel.js"></script>
+</body>
+</html>

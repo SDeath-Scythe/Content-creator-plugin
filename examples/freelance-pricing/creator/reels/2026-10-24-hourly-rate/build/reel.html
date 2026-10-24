@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="reel-duration" content="29">
+  <meta name="reel-fps" content="30">
+  <title>reel</title>
+  <link rel="stylesheet" href="reel.css">
+</head>
+<body>
+  <div class="stage">
+
+    <div class="blob drift" data-start="0"></div>
+
+    <!-- 0 to 3 s: hook. Slam + filling day bar from frame 0; claim from 1.2 s; four hours drop at 1.8 s; 8 becomes 4 at 2.3 s -->
+    <section class="scene" data-start="0" data-end="3">
+      <div class="safe">
+        <div class="stack">
+          <div class="num eight">8</div>
+          <div class="num four">4</div>
+        </div>
+        <div class="day">
+          <div class="blk" style="--i:0"></div><div class="blk" style="--i:1"></div>
+          <div class="blk" style="--i:2"></div><div class="blk" style="--i:3"></div>
+          <div class="blk gone" style="--i:4"></div><div class="blk gone" style="--i:5"></div>
+          <div class="blk gone" style="--i:6"></div><div class="blk gone" style="--i:7"></div>
+        </div>
+        <p class="hook words" style="--from: 1.2s">ساعاتك المدفوعة مو 8</p>
+      </div>
+    </section>
+
+    <!-- 3 to 8 s: 8 hours at the desk, 4 paid. Caption band carries the spoken line -->
+    <section class="scene" data-start="3" data-end="8">
+      <div class="safe">
+        <p class="chip soft">مثال</p>
+        <p class="big soft"><span class="accent ltr">4</span> ساعات مدفوعة</p>
+        <div class="day still">
+          <div class="blk" style="--i:0"></div><div class="blk" style="--i:1"></div>
+          <div class="blk" style="--i:2"></div><div class="blk" style="--i:3"></div>
+          <div class="blk dim"></div><div class="blk dim"></div>
+          <div class="blk dim"></div><div class="blk dim"></div>
+        </div>
+        <div class="tags">
+          <div class="tag" style="animation-delay: 1.0s">رسائل</div>
+          <div class="tag" style="animation-delay: 1.5s">عروض أسعار</div>
+          <div class="tag" style="animation-delay: 2.0s">تعديلات</div>
+          <div class="tag" style="animation-delay: 2.5s">بحث</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 to 14 s: the maths on 8 hours -->
+    <section class="scene" data-start="8" data-end="14">
+      <div class="safe">
+        <p class="chip rise">مثال</p>
+        <p class="calc rise" style="animation-delay: .5s"><span class="ltr">22 × 8 = 176</span> ساعة</p>
+        <p class="calc rise" style="animation-delay: 1.8s"><span class="ltr">8,800 ÷ 176</span></p>
+        <p class="result pop" style="animation-delay: 3.2s"><span class="ltr">50</span><small>ريال بالساعة</small></p>
+      </div>
+    </section>
+
+    <!-- 14 to 21 s: the maths on 4 paid hours, number races 50 to 100 -->
+    <section class="scene" data-start="14" data-end="21">
+      <div class="safe">
+        <p class="chip rise">مثال</p>
+        <p class="calc rise" style="animation-delay: .3s"><span class="ltr">22 × 4 = 88</span> ساعة</p>
+        <p class="calc rise" style="animation-delay: 1.0s"><span class="ltr">8,800 ÷ 88</span></p>
+        <div class="race"><div class="col"><div class="strip"><div>50</div><div>60</div><div>70</div><div>80</div><div>90</div><div>100</div></div></div><small>ريال بالساعة</small></div>
+      </div>
+    </section>
+
+    <!-- 21 to 25 s: half the price -->
+    <section class="scene" data-start="21" data-end="25">
+      <div class="safe">
+        <p class="big rise">حسبت نص سعرك</p>
+        <div class="bars">
+          <div class="bar half"><span class="ltr">50</span></div>
+          <div class="bar full"><span class="ltr">100</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25 to 29 s: CTA, serves the page goal (leads, keyword PRICE) -->
+    <section class="scene" data-start="25" data-end="29">
+      <div class="safe">
+        <p class="cta-key pop" style="animation-delay: .1s">PRICE</p>
+        <p class="fine rise" style="animation-delay: .6s">الأرقام أمثلة، مو وعد</p>
+      </div>
+    </section>
+
+    <div id="captions"></div>
+
+    <!-- Cover: the hook in a few words, inside the 3:4 grid crop -->
+    <section class="cover">
+      <div class="safe">
+        <div class="num" style="font-size: 560px">8</div>
+        <p class="hook">ساعاتك المدفوعة مو 8</p>
+        <div class="bar-small"></div>
+      </div>
+    </section>
+
+    <div class="guide"></div>
+  </div>
+
+  <!-- Captions timed to the script lines (no voice recorded yet) -->
+  <script type="application/json" id="captions-data">[
+    {"start": 3.0, "end": 5.5, "text": "تقعد 8 ساعات"},
+    {"start": 5.5, "end": 8.0, "text": "بس المدفوع منها <b>4</b>"},
+    {"start": 8.0, "end": 14.0, "text": "مثال: تبغى <b>8,800</b> ريال بالشهر"},
+    {"start": 14.0, "end": 21.0, "text": "بس المدفوع <b>4</b> ساعات باليوم"},
+    {"start": 21.0, "end": 25.0, "text": "يعني حسبت <b>نص</b> سعرك"},
+    {"start": 25.0, "end": 29.0, "text": "اكتب <b><bdi>PRICE</bdi></b> وأرسل لك الحاسبة مجاناً"}
+  ]</script>
+  <script src="reel.js"></script>
+</body>
+</html>
