@@ -1,6 +1,6 @@
 # Examples
 
-Output from test runs of content-creator, on made-up pages. Nothing here was posted. The Arabic service reel has an ElevenLabs narration; the others are silent.
+Output from test runs of content-creator, on made-up pages. Nothing here was posted. The Arabic service reel has an ElevenLabs narration, sound effects and a real report page; the others are silent.
 
 | Example | Page | What it shows |
 | --- | --- | --- |

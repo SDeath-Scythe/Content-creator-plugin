@@ -16,7 +16,7 @@ Serves the page goal: comment «مشروع» to get the details and the price.
 
 **Picked A.** Frame 0 is the student's own workload; the stamp is the "extraordinary event", and it lands the offer before 3 s.
 
-## 3. Script (15 s)
+## 3. Script (first cut 15 s; final 21.2 s with the narration and effects, see section 5)
 
 | Time | Voiceover (to record, in the owner's dialect) | On screen | Visual |
 | --- | --- | --- | --- |
@@ -32,13 +32,23 @@ Read the voiceover aloud and change any word that doesn't sound like you. On-scr
 
 Faceless, built in code (built-in engine). Voice: the owner. Sound: no music, or a licensed bed under the voice. Cover: the hook over the plan with the «خلّيه علينا» stamp.
 
-## 5. Build
-- Voice: `assets/voice.mp3`, generated in ElevenLabs (Iraqi Arabic voice, with emotion tags), 18.3 s. The reel was stretched from 15 s to 18.4 s to fit it instead of speeding the voice up.
-- Timing comes from the voice's pauses: the hook words appear as they're spoken (0 to 2.5 s), the «خلّيه علينا» stamp lands at 3.3 s on those words, the build rows flip on «نبني» 4.6, «برمجة» 6.15, «تصميم» 6.85, «اختبار» 7.45, the report row on «ونكتب التقرير» 8.4, defence prep slides in on «ونجهّزك» 11.3, and the CTA runs 14.5 to 18.4.
-- `build/reel.html` (hand-written; rows flip rather than move). Render: `node skills/render-reel/scripts/render.mjs build/reel.html out/reel.mp4 --voice assets/voice.mp3 --cover out/cover.jpg`.
-- Spec check (`out/spec.json`): **ok**. 18.4 s, 1080×1920, 30 fps, H.264 + AAC, 3.4 MB, moov first.
-- Frames: `out/frames.png` at 0.3, 1.6, 2.6, 3.5, 4.9, 6.5, 7.8, 8.9, 11.7, 16.8 s and the cover.
-- No burned-in captions: the on-screen steps already carry each line, so the reel works on mute.
+## 5. Build (v2: motion, sound effects, real report)
+
+**Soundtrack** (`build/audio.py`): the narration (`assets/voice.mp3`, 18.3 s) is cut at its own pauses and gaps are opened at the key moments, then mixed with sound effects that are synthesized in the script (no samples, nothing to license), and normalised for Instagram. Result: 21.2 s.
+
+| Reel time | Voice | Picture | Sound |
+| --- | --- | --- | --- |
+| 0 to 3.1 | مشروع تخرجك… ياخذ منك فصل كامل؟ | Plan slams in; week pills tick red; words appear as spoken; punch zoom on «كامل؟» | Thud, five ticks |
+| 3.1 to 4.85 | خلّيه علينا (3.8) | Stamp at 3.6 with a flash and camera shake | Rising whoosh into a heavy stamp |
+| 4.85 to 9.2 | نبني مشروعك كامل… برمجة، تصميم، واختبار | Step 1 slides in; a browser IDE and a mobile app fly over the plan (5.05 to 7.0, labelled «مشاريع نبنيها»); then the rows flip on their words (7.05, 7.25, 7.85, 8.45) | Whooshes, pops rising in pitch |
+| 9.2 to 12.7 | ونكتب التقرير كامل، بتنسيق جامعتك | Report row flips (9.9); the real report's contents page slides up over half the plan, labelled «من شغلنا»; a highlighter sweeps "Chapter One" (10.85) | Pop, paper, marker |
+| 12.7 to 15.75 | ونجهّزك للمناقشة… نشرح لك كل جزء | Defence row slides in (12.8); a defence slide deck flies in (13.05 to 15.5) | Pops, whoosh |
+| 15.75 to 21.2 | اكتب «مشروع» بالتعليقات… وانطيك التفاصيل والسعر | Riser, then the CTA hits at 16.5 with a flash and shake; «مشروع» pulses (17.1); «جاهز ✓» stamp and confetti (20.15) | Riser, big hit, pop, ding + sparkles |
+
+- The app screens are built in code (`build/reel.html`), not copied from the internet: original, so nothing to license, and they match the kind of project in the report. Swap in screenshots of the page's real past projects when there are some.
+- The report page (`build/assets/report-toc.jpg`) is the owner's own work.
+- Render: `python3 build/audio.py assets/voice.mp3 mix_raw.wav`, then `ffmpeg -i mix_raw.wav -af loudnorm=I=-14:TP=-1.5:LRA=11 mix.wav`, then `node skills/render-reel/scripts/render.mjs build/reel.html out/reel.mp4 --voice mix.wav --cover out/cover.jpg` (about 2 minutes).
+- Spec check (`out/spec.json`): **ok**. 21.2 s, 1080×1920, 30 fps, H.264 + AAC, 7.8 MB, about -15.7 LUFS. Frames: `out/frames.png`.
 
 ## 6. Instagram caption
 ```
@@ -54,7 +64,7 @@ Faceless, built in code (built-in engine). Voice: the owner. Sound: no music, or
 ```
 
 ## 7. Approval card
-`out/reel.mp4`, 18.4 s, 1080×1920, 3.4 MB, cover `out/cover.jpg`, manual route, trial reel recommended. Ready for the owner's yes. The voice is AI-generated: generate it on a paid ElevenLabs plan for commercial use.
+`out/reel.mp4`, 21.2 s, 1080×1920, 7.8 MB, cover `out/cover.jpg`, manual route, trial reel recommended. Ready for the owner's yes. The voice is AI-generated: generate it on a paid ElevenLabs plan for commercial use.
 
 ## Note on the offer
 Universities treat submitting work someone else did as misconduct, and some countries have laws against "contract cheating" services. The reel only promises what the page delivers: no grade guarantees, no claims about passing. Defence prep is part of the offer because the student still has to present and defend the project.

@@ -1,37 +1,68 @@
 <!doctype html>
-<!-- Graduation project service reel, 18.4 s with ElevenLabs narration, Arabic (right to left). The page builds the project and writes the report
-     for the student. The student's semester plan flips, row by row, to «علينا». -->
+<!-- Graduation project service reel, Arabic (right to left), 21.2 s, with narration and sound effects (audio.py).
+     Every time below matches the soundtrack: see the timeline in plan.md. -->
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <meta name="reel-duration" content="18.4">
+  <meta name="reel-duration" content="21.2">
   <meta name="reel-fps" content="30">
   <title>reel</title>
   <!-- reel.css, reel.js and fonts/ come from the plugin when they aren't next to this file -->
   <link rel="stylesheet" href="reel.css">
   <style>
     :root {
-      --bg: #0E1226; --fg: #FFFFFF; --accent: #FFD43B; --muted: rgba(255, 255, 255, .76);
+      --bg: #0E1226; --fg: #FFFFFF; --accent: #FFD43B; --muted: rgba(255, 255, 255, .78);
       --paper: #FBF8F1; --ink: #1A1E36; --ink-soft: #6B6F86; --red: #E5484D; --green: #22B07D;
       --hl: rgba(34, 176, 125, .22);
-      --size-big: 92px; --size-body: 54px;
+      --size-big: 96px; --size-body: 54px;
     }
+
+    /* Camera: three nested wrappers, each shakes once (stamp 3.6 s, CTA 16.5 s, «جاهز» 20.15 s) */
+    .cam { position: absolute; inset: 0; }
+    .cam.s1 { animation: shake .4s linear both; animation-delay: 3.6s; }
+    .cam.s2 { animation: shake .4s linear both; animation-delay: 16.5s; }
+    .cam.s3 { animation: shake .35s linear both; animation-delay: 20.15s; }
+    @keyframes shake {
+      0%, 100% { transform: none; } 15% { transform: translate(-16px, 10px) rotate(-.6deg); }
+      35% { transform: translate(14px, -8px) rotate(.5deg); } 55% { transform: translate(-9px, 6px); }
+      75% { transform: translate(5px, -3px); }
+    }
+    .flash { position: absolute; inset: 0; background: #fff; pointer-events: none; z-index: 50; animation: flash .3s ease-out both; }
+    @keyframes flash { 0% { opacity: 0; } 1% { opacity: .55; } 100% { opacity: 0; } }
+
+    /* A moving dot grid behind everything */
+    .grid { position: absolute; inset: -200px; will-change: transform;
+            background-image: radial-gradient(rgba(255,255,255,.07) 2.5px, transparent 2.5px); background-size: 54px 54px;
+            animation: grid-move 21.2s linear both; }
+    @keyframes grid-move { from { transform: translate(0, 0); } to { transform: translate(-160px, 320px); } }
 
     /* Top text area: y 250 to 610 */
     .top { position: absolute; top: var(--safe-top); left: var(--safe-left); right: var(--safe-right); height: 360px;
-           display: flex; flex-direction: column; justify-content: center; gap: 20px; }
+           display: flex; flex-direction: column; justify-content: center; gap: 18px; z-index: 5; }
     .top > * { margin: 0; flex-shrink: 0; }
     .hook { font-size: 98px; line-height: 1.3; }
+    .hook.words > span:nth-child(1) { animation-delay: .05s; }
+    .hook.words > span:nth-child(2) { animation-delay: .55s; }
+    .hook.words > span:nth-child(3) { animation-delay: 1.5s; }
+    .hook.words > span:nth-child(4) { animation-delay: 1.85s; }
+    .hook.words > span:nth-child(5) { animation-delay: 2.15s; }
+    .hook.words > span:nth-child(6) { animation-delay: 2.45s; color: var(--accent); }
+    .punch { animation: punch .35s cubic-bezier(.3, 1.6, .5, 1) both; animation-delay: 2.5s; transform-origin: 100% 50%; }
+    @keyframes punch { 0% { transform: scale(1); } 40% { transform: scale(1.09); } 100% { transform: scale(1); } }
     .step { font-family: var(--display); font-weight: 900; font-size: var(--size-big); line-height: 1.3; }
     .step .n { color: var(--accent); }
     .body { line-height: 1.5; }
+    .slide-in { animation: slide-in .38s cubic-bezier(.2, .9, .25, 1) both; }
+    @keyframes slide-in { from { opacity: 0; transform: translateX(-90px); filter: blur(10px); } to { opacity: 1; transform: none; filter: none; } }
 
-    /* The student's semester plan: y 645 to about 1490 */
+    /* The student's semester plan: y 645 to 1490 */
     .paper { position: absolute; left: var(--safe-left); right: var(--safe-right); top: 645px; height: 845px;
              background: var(--paper); color: var(--ink); border-radius: 26px; padding: 40px 40px 0;
              box-shadow: 0 40px 90px rgba(0, 0, 0, .45); transform-origin: 50% 0;
-             animation: paper-in .55s cubic-bezier(.2, .9, .25, 1) both; }
+             animation: paper-in .55s cubic-bezier(.2, .9, .25, 1) both, paper-out .5s cubic-bezier(.5, 0, .2, 1) both;
+             animation-delay: 0s, 16.45s; }
     @keyframes paper-in { from { transform: scale(1.14) rotate(2.5deg) translateY(-30px); } to { transform: none; } }
+    @keyframes paper-out { from { transform: none; } to { transform: translateY(60px) scale(.94); } }
     .doc-label { font-size: 32px; font-weight: 700; color: var(--ink-soft); }
     .doc-title { font-family: var(--display); font-size: 58px; font-weight: 800; margin: 4px 0 20px; }
     .plan { list-style: none; margin: 0; padding: 0; }
@@ -50,101 +81,255 @@
     .after .pill { background: var(--green); font-size: 34px; }
     .after .text::after { content: " ✓"; color: var(--green); }
     .before { animation: swap-out .3s ease-in both; }
-    .after { animation: swap-in .4s cubic-bezier(.2, .9, .3, 1.3) both; }
+    .after { animation: swap-in .45s cubic-bezier(.2, .9, .3, 1.5) both; }
     @keyframes swap-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-30px); } }
-    @keyframes swap-in { from { opacity: 0; transform: translateY(30px) scale(.9); } to { opacity: 1; transform: none; } }
-    /* The sixth row (defence prep) slides in at 11.3 s, on «ونجهّزك للمناقشة» */
-    .row.extra { animation: hl 2.4s linear both, appear .45s cubic-bezier(.2, .9, .3, 1.2) both; animation-delay: 11.3s, 11.3s; }
+    @keyframes swap-in { from { opacity: 0; transform: translateY(30px) scale(.8); } to { opacity: 1; transform: none; } }
+    .row.extra { animation: hl 2.4s linear both, appear .45s cubic-bezier(.2, .9, .3, 1.2) both; animation-delay: 12.8s, 12.8s; }
     @keyframes appear { from { opacity: 0; transform: translateX(-120px); } to { opacity: 1; transform: none; } }
 
-    /* Stamps */
-    .stamp { position: absolute; left: 50%; top: 960px; width: 760px; margin-left: -380px; text-align: center;
-             font-family: var(--display); font-weight: 900; font-size: 112px; padding: 0 0 20px;
-             border: 12px solid currentColor; border-radius: 22px; color: var(--green); background: rgba(251, 248, 241, .86);
-             animation: stamp .28s cubic-bezier(.3, 1.6, .5, 1) both; }
-    @keyframes stamp { from { opacity: 0; transform: rotate(12deg) scale(2.4); } to { opacity: 1; transform: rotate(8deg) scale(1); } }
+    /* Dims the plan while a picture sits on top of it */
+    .dim { position: absolute; inset: 0; border-radius: 26px; background: #0E1226; pointer-events: none; animation: dim both linear; }
+    @keyframes dim { 0% { opacity: 0; } 10%, 88% { opacity: .5; } 100% { opacity: 0; } }
 
-    /* Hook words land as they're spoken (voice: مشروع 0.0, تخرجك 0.6, ياخذ 1.5, منك 1.85, فصل 2.15, كامل 2.45) */
-    .hook.words > span:nth-child(1) { animation-delay: .05s; }
-    .hook.words > span:nth-child(2) { animation-delay: .55s; }
-    .hook.words > span:nth-child(3) { animation-delay: 1.5s; }
-    .hook.words > span:nth-child(4) { animation-delay: 1.85s; }
-    .hook.words > span:nth-child(5) { animation-delay: 2.15s; }
-    .hook.words > span:nth-child(6) { animation-delay: 2.45s; }
-    .cta-word { display: inline-block; background: var(--accent); color: var(--bg); padding: 0 22px; border-radius: 16px; }
+    /* Pictures that fly in over the plan: in (0 to 15%), hold with a slow drift, out (85 to 100%) */
+    .media { position: absolute; z-index: 6; filter: drop-shadow(0 36px 60px rgba(0, 0, 0, .55)); }
+    @keyframes fly-r { 0% { opacity: 0; transform: translate(700px, 120px) rotate(18deg) scale(.8); }
+                       10% { opacity: 1; transform: translate(-20px, -8px) rotate(-6deg) scale(1.04); }
+                       16% { transform: translate(0, 0) rotate(-4deg) scale(1); }
+                       86% { opacity: 1; transform: translate(-14px, -10px) rotate(-3deg) scale(1.02); }
+                       100% { opacity: 0; transform: translate(-760px, -60px) rotate(-18deg) scale(.85); } }
+    @keyframes fly-l { 0% { opacity: 0; transform: translate(-700px, 160px) rotate(-20deg) scale(.8); }
+                       10% { opacity: 1; transform: translate(20px, -10px) rotate(7deg) scale(1.05); }
+                       16% { transform: translate(0, 0) rotate(5deg) scale(1); }
+                       86% { opacity: 1; transform: translate(10px, -12px) rotate(4deg) scale(1.02); }
+                       100% { opacity: 0; transform: translate(760px, -40px) rotate(20deg) scale(.85); } }
+    @keyframes fly-up { 0% { opacity: 0; transform: translateY(600px) rotate(-12deg); }
+                        12% { opacity: 1; transform: translateY(-16px) rotate(-6deg); }
+                        18% { transform: translateY(0) rotate(-5deg); }
+                        86% { opacity: 1; transform: translateY(-14px) rotate(-4deg); }
+                        100% { opacity: 0; transform: translateY(-700px) rotate(8deg); } }
+    .label { position: absolute; top: -26px; right: -14px; z-index: 2; background: var(--accent); color: var(--bg);
+             font-family: var(--display); font-weight: 900; font-size: 34px; padding: 4px 22px 10px; border-radius: 14px; transform: rotate(4deg); }
+
+    /* Project 1: a collaborative browser IDE (built in code, matches the report) */
+    .ide { left: 70px; top: 700px; width: 820px; height: 520px; animation: fly-r 1.95s linear both; animation-delay: 5.05s; }
+    .win { width: 100%; height: 100%; border-radius: 22px; overflow: hidden; background: #1E1E2E; direction: ltr; font-family: ui-monospace, "DejaVu Sans Mono", monospace; }
+    .bar { height: 44px; background: #2A2A3C; display: flex; align-items: center; gap: 10px; padding: 0 18px; color: #A6ADC8; font-size: 20px; }
+    .bar i { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+    .ide-body { display: grid; grid-template-columns: 170px 1fr 160px; height: calc(100% - 44px); }
+    .tree { background: #181825; color: #A6ADC8; font-size: 17px; padding: 14px 12px; line-height: 1.9; }
+    .tree b { color: #CDD6F4; font-weight: 600; }
+    .code { padding: 14px 18px; font-size: 18px; line-height: 1.75; color: #CDD6F4; white-space: pre; position: relative; }
+    .code .ln { color: #585B70; display: inline-block; width: 26px; }
+    .k { color: #CBA6F7; } .s { color: #A6E3A1; } .f { color: #89B4FA; } .c { color: #6C7086; }
+    .term { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: #11111B; border-top: 2px solid #313244;
+            padding: 10px 18px; font-size: 17px; line-height: 1.6; color: #A6E3A1; }
+    .cursor { display: inline-block; width: 10px; height: 20px; background: #CDD6F4; vertical-align: middle; animation: blink .5s steps(1) infinite both; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .calls { background: #181825; padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+    .tile { flex: 1; border-radius: 14px; display: grid; place-items: center; color: #fff; font-size: 34px; font-weight: 700; font-family: sans-serif; }
+
+    /* Project 2: a student mobile app */
+    .phone { left: 590px; top: 880px; width: 300px; height: 600px; animation: fly-l 1.4s linear both; animation-delay: 5.6s; z-index: 7; }
+    .device { width: 100%; height: 100%; border-radius: 46px; background: #0B0D17; padding: 12px; }
+    .screen { width: 100%; height: 100%; border-radius: 36px; overflow: hidden; background: #F4F6FB; color: #1A1E36; padding: 34px 20px; font-size: 22px; }
+    .screen h4 { margin: 0 0 4px; font-size: 26px; font-family: var(--display); }
+    .screen .sub { color: #6B6F86; font-size: 18px; margin-bottom: 18px; }
+    .card { background: #fff; border-radius: 18px; padding: 14px 16px; margin-bottom: 14px; box-shadow: 0 6px 16px rgba(26, 30, 54, .08); }
+    .card .big-n { font-size: 40px; font-weight: 800; color: #22B07D; }
+    .bars { display: flex; align-items: flex-end; gap: 10px; height: 90px; direction: ltr; }
+    .bars i { flex: 1; background: #6C8CFF; border-radius: 6px 6px 0 0; }
+    .lst div { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #ECEEF4; font-size: 19px; }
+
+    /* The real report (the owner's own work) */
+    .report-img { left: 90px; top: 720px; width: 520px; animation: fly-up 2.3s linear both; animation-delay: 10.3s; }
+    .report-img img { width: 100%; display: block; border-radius: 10px; }
+    .marker { position: absolute; left: 92px; top: 228px; height: 30px; width: 0; background: rgba(255, 212, 59, .55); border-radius: 6px;
+              animation: mark .45s ease-out both; animation-delay: .55s; }
+    @keyframes mark { from { width: 0; } to { width: 365px; } }
+
+    /* Defence: the presentation */
+    .slide-card { left: 80px; top: 760px; width: 800px; height: 450px; animation: fly-r 2.45s linear both; animation-delay: 13.05s; }
+    .deck { width: 100%; height: 100%; border-radius: 20px; background: linear-gradient(135deg, #1B2A6B, #0E1226); color: #fff; padding: 40px 46px; direction: ltr; font-family: sans-serif; position: relative; overflow: hidden; }
+    .deck .t { font-size: 46px; font-weight: 800; }
+    .deck .st { font-size: 24px; color: #A9B4E8; margin: 6px 0 26px; }
+    .deck ul { margin: 0; padding-left: 28px; font-size: 26px; line-height: 1.7; }
+    .deck .qa { position: absolute; right: 36px; bottom: 30px; background: #FFD43B; color: #0E1226; font-weight: 800; font-size: 30px; padding: 8px 22px; border-radius: 30px; }
+    .deck .chart { position: absolute; right: 46px; top: 150px; display: flex; align-items: flex-end; gap: 12px; height: 150px; }
+    .deck .chart i { width: 34px; background: #22B07D; border-radius: 6px 6px 0 0; }
+
+    /* Stamps */
+    .stamp { position: absolute; left: 50%; top: 960px; width: 760px; margin-left: -380px; text-align: center; z-index: 8;
+             font-family: var(--display); font-weight: 900; font-size: 112px; padding: 0 0 20px;
+             border: 12px solid currentColor; border-radius: 22px; color: var(--green); background: rgba(251, 248, 241, .9);
+             animation: stamp .28s cubic-bezier(.3, 1.6, .5, 1) both; }
+    @keyframes stamp { from { opacity: 0; transform: rotate(14deg) scale(2.6); } to { opacity: 1; transform: rotate(8deg) scale(1); } }
+
+    /* CTA */
+    .cta-step { font-size: 108px; }
+    .cta-word { display: inline-block; background: var(--accent); color: var(--bg); padding: 0 24px; border-radius: 18px;
+                animation: pulse .5s cubic-bezier(.3, 1.6, .5, 1) both; animation-delay: 1.35s; }
+    @keyframes pulse { 0% { transform: scale(1); } 40% { transform: scale(1.22) rotate(-3deg); } 100% { transform: scale(1); } }
+    .confetti { position: absolute; left: 540px; top: 1100px; z-index: 9; }
+    .confetti i { position: absolute; width: 18px; height: 30px; border-radius: 4px; animation: burst 1.3s cubic-bezier(.15, .7, .4, 1) both; animation-delay: 4.4s; }
+    @keyframes burst { 0% { opacity: 0; transform: translate(0, 0) scale(.2) rotate(0); }
+                       8% { opacity: 1; }
+                       45% { transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--r)); }
+                       100% { opacity: 0; transform: translate(calc(var(--dx) * 1.25), calc(var(--dy) + 520px)) scale(.9) rotate(calc(var(--r) * 2)); } }
 
     /* Cover: the plan sits still under the hook, with the stamp */
-    .cover-mode .paper, .cover-mode .row, .cover-mode .pill, .cover-mode .before { animation: none !important; }
-    .cover-mode .after, .cover-mode .row.extra { display: none; }
+    .cover-mode .paper, .cover-mode .row, .cover-mode .pill, .cover-mode .before, .cover-mode .cam { animation: none !important; }
+    .cover-mode .after, .cover-mode .row.extra, .cover-mode .media, .cover-mode .dim, .cover-mode .flash, .cover-mode .confetti { display: none; }
     .cover .hook { font-size: 98px; }
   </style>
 </head>
 <body>
   <div class="stage">
+    <div class="grid" data-start="0"></div>
     <div class="blob drift" data-start="0"></div>
 
-    <!-- Persistent: the student's semester plan. Rows flip to «علينا» at their swap times. -->
-    <div class="paper" data-start="0">
-      <div class="doc-label">مشروع التخرج</div>
-      <div class="doc-title">خطة الفصل الدراسي</div>
-      <ol class="plan">
-        <li class="row" style="animation-delay: 6.15s"><span class="before" style="--k: 0; animation-delay: 6.15s"><span class="pill">أسبوع <bdi dir="ltr">1–4</bdi></span><span class="text">تتعلم كل التقنيات</span></span><span class="after" style="animation-delay: 6.15s"><span class="pill">علينا</span><span class="text">البرمجة والتقنيات</span></span></li>
-        <li class="row" style="animation-delay: 6.85s"><span class="before" style="--k: 1; animation-delay: 6.85s"><span class="pill">أسبوع <bdi dir="ltr">5–7</bdi></span><span class="text">تصمم كل الشاشات</span></span><span class="after" style="animation-delay: 6.85s"><span class="pill">علينا</span><span class="text">التصميم</span></span></li>
-        <li class="row" style="animation-delay: 4.6s"><span class="before" style="--k: 2; animation-delay: 4.6s"><span class="pill">أسبوع <bdi dir="ltr">8–12</bdi></span><span class="text">تبني كل شيء</span></span><span class="after" style="animation-delay: 4.6s"><span class="pill">علينا</span><span class="text">بناء المشروع كامل</span></span></li>
-        <li class="row" style="animation-delay: 7.45s"><span class="before" style="--k: 3; animation-delay: 7.45s"><span class="pill">أسبوع <bdi dir="ltr">13</bdi></span><span class="text">تختبر المشروع</span></span><span class="after" style="animation-delay: 7.45s"><span class="pill">علينا</span><span class="text">الاختبار</span></span></li>
-        <li class="row report" style="animation-delay: 8.4s"><span class="before" style="--k: 4; animation-delay: 8.4s"><span class="pill">أسبوع <bdi dir="ltr">14–15</bdi></span><span class="text">تكتب تقرير 80 صفحة</span></span><span class="after" style="animation-delay: 8.4s"><span class="pill">علينا</span><span class="text">التقرير كامل</span></span></li>
-        <li class="row extra"><span class="after" style="animation: none"><span class="pill">علينا</span><span class="text">تجهيزك للمناقشة</span></span></li>
-      </ol>
-    </div>
+    <div class="cam s1"><div class="cam s2"><div class="cam s3">
 
-    <!-- 0 to 4.4 s: hook. Plan slams in at frame 0; the question appears word by word with the voice; stamp on «خلّيه علينا» at 3.3 s -->
-    <section class="scene" data-start="0" data-end="4.4">
-      <div class="top">
-        <p class="hook big words" style="--from: 1.0s; --stagger: .1s">مشروع تخرجك ياخذ منك فصل كامل؟</p>
+      <!-- Persistent: the student's semester plan. Rows flip to «علينا» on their words. -->
+      <div class="paper" data-start="0">
+        <div class="doc-label">مشروع التخرج</div>
+        <div class="doc-title">خطة الفصل الدراسي</div>
+        <ol class="plan">
+          <li class="row" style="animation-delay: 7.25s"><span class="before" style="--k: 0; animation-delay: 7.25s"><span class="pill">أسبوع <bdi dir="ltr">1–4</bdi></span><span class="text">تتعلم كل التقنيات</span></span><span class="after" style="animation-delay: 7.25s"><span class="pill">علينا</span><span class="text">البرمجة والتقنيات</span></span></li>
+          <li class="row" style="animation-delay: 7.85s"><span class="before" style="--k: 1; animation-delay: 7.85s"><span class="pill">أسبوع <bdi dir="ltr">5–7</bdi></span><span class="text">تصمم كل الشاشات</span></span><span class="after" style="animation-delay: 7.85s"><span class="pill">علينا</span><span class="text">التصميم</span></span></li>
+          <li class="row" style="animation-delay: 7.05s"><span class="before" style="--k: 2; animation-delay: 7.05s"><span class="pill">أسبوع <bdi dir="ltr">8–12</bdi></span><span class="text">تبني كل شيء</span></span><span class="after" style="animation-delay: 7.05s"><span class="pill">علينا</span><span class="text">بناء المشروع كامل</span></span></li>
+          <li class="row" style="animation-delay: 8.45s"><span class="before" style="--k: 3; animation-delay: 8.45s"><span class="pill">أسبوع <bdi dir="ltr">13</bdi></span><span class="text">تختبر المشروع</span></span><span class="after" style="animation-delay: 8.45s"><span class="pill">علينا</span><span class="text">الاختبار</span></span></li>
+          <li class="row report" style="animation-delay: 9.9s"><span class="before" style="--k: 4; animation-delay: 9.9s"><span class="pill">أسبوع <bdi dir="ltr">14–15</bdi></span><span class="text">تكتب تقرير 80 صفحة</span></span><span class="after" style="animation-delay: 9.9s"><span class="pill">علينا</span><span class="text">التقرير كامل</span></span></li>
+          <li class="row extra"><span class="after" style="animation: none"><span class="pill">علينا</span><span class="text">تجهيزك للمناقشة</span></span></li>
+        </ol>
+        <div class="dim" style="animation-duration: 1.95s; animation-delay: 5.05s"></div>
+        <div class="dim" style="animation-duration: 2.3s; animation-delay: 10.3s"></div>
+        <div class="dim" style="animation-duration: 2.45s; animation-delay: 13.05s"></div>
       </div>
-      <div class="stamp" style="animation-delay: 3.3s">خلّيه علينا</div>
-    </section>
 
-    <section class="scene" data-start="4.4" data-end="8.2">
-      <div class="top">
-        <p class="step rise"><span class="n">1.</span> نبني مشروعك كامل</p>
-        <p class="body rise muted" style="animation-delay: .15s">برمجة، تصميم واختبار.</p>
+      <!-- 5.05 to 7.0 s: projects fly in over the plan («نبني مشروعك كامل») -->
+      <div class="media ide" data-start="0">
+        <div class="label">مشاريع نبنيها</div>
+        <div class="win">
+          <div class="bar"><i style="background:#F38BA8"></i><i style="background:#F9E2AF"></i><i style="background:#A6E3A1"></i>&nbsp; CollabIDE — server.js</div>
+          <div class="ide-body">
+            <div class="tree"><b>▾ src</b><br>&nbsp; App.jsx<br>&nbsp; Editor.jsx<br>&nbsp; <b>server.js</b><br>&nbsp; socket.js<br>&nbsp; rtc.js<br><b>▸ prisma</b></div>
+            <div class="code"><span class="ln">1</span><span class="k">import</span> express <span class="k">from</span> <span class="s">"express"</span>;
+<span class="ln">2</span><span class="k">import</span> { Server } <span class="k">from</span> <span class="s">"socket.io"</span>;
+<span class="ln">3</span>
+<span class="ln">4</span><span class="k">const</span> io = <span class="k">new</span> <span class="f">Server</span>(http);
+<span class="ln">5</span>io.<span class="f">on</span>(<span class="s">"connection"</span>, (s) =&gt; {
+<span class="ln">6</span>  s.<span class="f">on</span>(<span class="s">"edit"</span>, <span class="f">syncFile</span>);
+<span class="ln">7</span>  <span class="c">// live terminal over PTY</span>
+<span class="ln">8</span>  s.<span class="f">on</span>(<span class="s">"term"</span>, <span class="f">pty</span>.write);
+<span class="ln">9</span>});
+              <div class="term">$ npm run dev<br>✓ server ready on :3000<br>✓ 2 users connected <span class="cursor"></span></div>
+            </div>
+            <div class="calls"><div class="tile" style="background:#5B6CFF">A</div><div class="tile" style="background:#22B07D">M</div></div>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <section class="scene" data-start="8.2" data-end="11.1">
-      <div class="top">
-        <p class="step rise"><span class="n">2.</span> ونكتب التقرير كامل</p>
-        <p class="body rise muted" style="animation-delay: .15s">بتنسيق جامعتك ومع المراجع.</p>
+      <div class="media phone" data-start="0">
+        <div class="device"><div class="screen">
+          <h4>مرحباً، أحمد 👋</h4>
+          <div class="sub">تطبيق الحضور الجامعي</div>
+          <div class="card"><div>نسبة الحضور</div><div class="big-n">92%</div></div>
+          <div class="card"><div class="bars"><i style="height:40%"></i><i style="height:65%"></i><i style="height:50%"></i><i style="height:85%"></i><i style="height:70%"></i><i style="height:95%"></i></div></div>
+          <div class="card lst"><div><span>البرمجة</span><span>✓</span></div><div><span>الشبكات</span><span>✓</span></div><div><span>قواعد البيانات</span><span>✓</span></div></div>
+        </div></div>
       </div>
-    </section>
 
-    <section class="scene" data-start="11.1" data-end="14.5">
-      <div class="top">
-        <p class="step rise"><span class="n">3.</span> ونجهّزك للمناقشة</p>
-        <p class="body rise muted" style="animation-delay: .15s">نشرح لك كل جزء حتى تدافع عنه بثقة.</p>
+      <!-- 10.3 to 12.6 s: a real report («ونكتب التقرير كامل») -->
+      <div class="media report-img" data-start="0">
+        <div class="label">من شغلنا</div>
+        <img src="assets/report-toc.jpg" alt="">
+        <div class="marker" style="animation-delay: 10.85s"></div>
       </div>
-    </section>
 
-    <!-- CTA: the page goal is leads (enquiries for the service) -->
-    <section class="scene" data-start="14.5" data-end="18.4">
-      <div class="top">
-        <p class="step pop">اكتب <span class="cta-word">مشروع</span> بالتعليقات</p>
-        <p class="body rise muted" style="animation-delay: .2s">ونرسل لك التفاصيل والسعر.</p>
+      <!-- 13.05 to 15.5 s: the defence presentation («ونجهّزك للمناقشة») -->
+      <div class="media slide-card" data-start="0">
+        <div class="label">عرض المناقشة</div>
+        <div class="deck">
+          <div class="t">Collaborative Browser IDE</div>
+          <div class="st">Graduation Project · Final Defense</div>
+          <ul><li>Real-time editing with WebSockets</li><li>Peer-to-peer calls with WebRTC</li><li>Live terminal over PTY</li></ul>
+          <div class="chart"><i style="height:45%"></i><i style="height:70%"></i><i style="height:100%"></i></div>
+          <div class="qa">Q&amp;A</div>
+        </div>
       </div>
-      <div class="stamp" style="animation-delay: 2.2s">جاهز ✓</div>
-    </section>
 
-    <section class="cover">
-      <div class="top">
-        <p class="hook big">مشروع تخرجك ياخذ منك فصل كامل؟</p>
-      </div>
-      <div class="stamp" style="animation: none; transform: rotate(8deg)">خلّيه علينا</div>
-    </section>
+      <!-- 0 to 4.85 s: hook. Words appear as they're spoken; the stamp lands on «خلّيه علينا» -->
+      <section class="scene" data-start="0" data-end="4.85">
+        <div class="top">
+          <p class="hook big words punch">مشروع تخرجك ياخذ منك فصل كامل؟</p>
+        </div>
+        <div class="stamp" style="animation-delay: 3.6s">خلّيه علينا</div>
+        <div class="flash" style="animation-delay: 3.6s"></div>
+      </section>
 
+      <section class="scene" data-start="4.85" data-end="9.22">
+        <div class="top">
+          <p class="step slide-in"><span class="n">1.</span> نبني مشروعك كامل</p>
+          <p class="body slide-in muted" style="animation-delay: .12s">برمجة، تصميم واختبار.</p>
+        </div>
+      </section>
+
+      <section class="scene" data-start="9.22" data-end="12.7">
+        <div class="top">
+          <p class="step slide-in"><span class="n">2.</span> ونكتب التقرير كامل</p>
+          <p class="body slide-in muted" style="animation-delay: .12s">بتنسيق جامعتك ومع المراجع.</p>
+        </div>
+      </section>
+
+      <section class="scene" data-start="12.7" data-end="15.75">
+        <div class="top">
+          <p class="step slide-in"><span class="n">3.</span> ونجهّزك للمناقشة</p>
+          <p class="body slide-in muted" style="animation-delay: .12s">نشرح لك كل جزء حتى تدافع عنه بثقة.</p>
+        </div>
+      </section>
+
+      <!-- 15.75 to 21.2 s: CTA. Hits at 16.5 s; «مشروع» pulses at 17.1 s; «جاهز ✓» + confetti at 20.15 s -->
+      <section class="scene" data-start="15.75" data-end="21.2">
+        <div class="top">
+          <p class="step cta-step pop" style="animation-delay: .75s">اكتب <span class="cta-word">مشروع</span> بالتعليقات</p>
+          <p class="body slide-in muted" style="animation-delay: 1.0s">ونرسل لك التفاصيل والسعر.</p>
+        </div>
+        <div class="stamp" style="animation-delay: 4.4s">جاهز ✓</div>
+        <div class="confetti" id="confetti"></div>
+        <div class="flash" style="animation-delay: .75s"></div>
+      </section>
+
+      <section class="cover">
+        <div class="top">
+          <p class="hook big">مشروع تخرجك ياخذ منك فصل كامل؟</p>
+        </div>
+        <div class="stamp" style="animation: none; transform: rotate(8deg)">خلّيه علينا</div>
+      </section>
+
+    </div></div></div>
     <div class="guide"></div>
   </div>
 
+  <script>
+    // Confetti pieces with fixed pseudo-random spreads, so every render is identical
+    (() => {
+      const box = document.getElementById("confetti");
+      const colors = ["#FFD43B", "#22B07D", "#5B6CFF", "#E5484D", "#FFFFFF"];
+      let seed = 11;
+      const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+      for (let i = 0; i < 40; i++) {
+        const p = document.createElement("i");
+        const angle = rnd() * Math.PI * 2;
+        const dist = 260 + rnd() * 420;
+        p.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
+        p.style.setProperty("--dy", `${Math.sin(angle) * dist - 260}px`);
+        p.style.setProperty("--r", `${(rnd() - .5) * 720}deg`);
+        p.style.background = colors[i % colors.length];
+        box.append(p);
+      }
+    })();
+  </script>
   <script type="application/json" id="captions-data">[]</script>
   <script src="reel.js"></script>
 </body>
