@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Build the reel's soundtrack: the narration cut at its pauses with gaps opened, plus synthesized sound effects.
+"""Build the reel's soundtrack: the narration cut at its pauses with gaps opened, three synthesized sound effects
+and an original music bed that ducks under the voice.
 
   python3 audio.py voice.mp3 mix.wav
 
@@ -137,6 +138,84 @@ def place(track, at, clip, gain=1.0):
     track[i:j] += clip[: j - i] * gain
 
 
+# --- the music bed (composed here, so it's original) -------------------------------------------
+BPM = 100
+BAR = 4 * 60 / BPM          # 2.4 s
+# A minor, warm and hopeful: Am F C G, twice, then C to land on the ding (E6) at 20.15 s
+CHORDS = [("A", "C", "E"), ("F", "A", "C"), ("C", "E", "G"), ("G", "B", "D")] * 2 + [("C", "E", "G")]
+NOTE = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A": 9, "B": 11}
+
+
+def hz(name, octave):
+    return 440.0 * 2 ** ((NOTE[name] + 12 * (octave + 1) - 69) / 12)
+
+
+def soft_tone(f, dur, harmonics=((1, 1.0), (2, .25), (3, .08)), detune=0.0):
+    t = np.arange(int(dur * SR)) / SR
+    out = np.zeros_like(t)
+    for k, a in harmonics:
+        for d in ((-detune, detune) if detune else (0,)):
+            out += a * np.sin(2 * np.pi * f * k * (1 + d) * t)
+    return out
+
+
+def pad_chord(chord, dur):
+    n = int(dur * SR)
+    out = np.zeros(n)
+    for i, name in enumerate(chord):
+        out += soft_tone(hz(name, 3 if i == 0 else 4), dur, detune=0.0025) * (0.5 if i == 0 else 0.35)
+    a, r = int(0.5 * SR), int(0.7 * SR)
+    env_ = np.ones(n)
+    env_[:a] = np.linspace(0, 1, a)
+    env_[-r:] = np.linspace(1, 0, r)
+    return out * env_
+
+
+def pluck(f, dur=0.6):
+    t = np.arange(int(dur * SR)) / SR
+    tone = np.sin(2 * np.pi * f * t) + 0.3 * np.sin(2 * np.pi * 2 * f * t) + 0.08 * np.sin(2 * np.pi * 3 * f * t)
+    return tone * np.exp(-6 * t) * np.minimum(1, t / 0.004)
+
+
+def kick(dur=0.3):
+    return sine_sweep(110, 45, dur) * env(int(dur * SR), curve=9)
+
+
+def music():
+    track = np.zeros(int(DUR * SR))
+    step = BAR / 8                                   # eighth notes
+    for b, chord in enumerate(CHORDS):
+        t0 = b * BAR
+        dur = BAR + 0.7 if b < len(CHORDS) - 1 else DUR - t0
+        place(track, t0, pad_chord(chord, dur), 0.22)
+        # arpeggio joins at step 1 (4.85 s)
+        notes = [hz(chord[0], 4), hz(chord[1], 4), hz(chord[2], 4), hz(chord[0], 5)]
+        for i, f in enumerate([notes[j] for j in (0, 1, 2, 3, 2, 1, 2, 3)]):
+            at = t0 + i * step
+            if 4.8 <= at < 20.0:
+                place(track, at, pluck(f), 0.16)
+        # soft kick on beats 1 and 3 from step 2 (9.6 s); the last chord rings out
+        for beat in (0, 2):
+            at = t0 + beat * BAR / 4
+            if 9.6 <= at < 19.2:
+                place(track, at, kick(), 0.35)
+    fade = int(1.2 * SR)
+    track[-fade:] *= np.linspace(1, 0, fade)
+    track[: int(0.3 * SR)] *= np.linspace(0, 1, int(0.3 * SR))
+    return track
+
+
+def duck(music_track, voice_track, depth=0.55):
+    """Lower the music while the voice speaks (smoothed voice level as the key)."""
+    win = int(0.05 * SR)
+    level = np.sqrt(np.convolve(voice_track ** 2, np.ones(win) / win, mode="same"))
+    level /= max(level.max(), 1e-9)
+    smooth = int(0.25 * SR)
+    level = np.convolve(level, np.ones(smooth) / smooth, mode="same")
+    level = np.clip(level * 3, 0, 1)
+    return music_track * (1 - depth * level)
+
+
 def main(voice_path, out_path):
     voice = load_voice(voice_path)
     vtrack = np.zeros(int(DUR * SR))
@@ -145,7 +224,9 @@ def main(voice_path, out_path):
     sfx = np.zeros_like(vtrack)
     for at, clip in SFX:
         place(sfx, at, clip.astype(np.float32))
-    mix = vtrack + sfx * 0.4
+    bed = duck(music(), vtrack)
+    bed *= 0.16 * np.sqrt(np.mean(vtrack ** 2)) / max(np.sqrt(np.mean(bed ** 2)), 1e-9)  # bed sits about 16 dB under the voice
+    mix = vtrack + sfx * 0.4 + bed
     mix /= max(1.0, np.abs(mix).max() / 0.95)
     with wave.open(out_path, "wb") as w:
         w.setnchannels(1)

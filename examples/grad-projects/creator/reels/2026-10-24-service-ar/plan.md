@@ -36,6 +36,8 @@ Faceless, built in code (built-in engine). Voice: the owner. Sound: no music, or
 
 **Soundtrack** (`build/audio.py`): the narration (`assets/voice.mp3`, 18.3 s) is cut at its own pauses and gaps are opened at the key moments, then mixed with three synthesized sound effects (no samples, nothing to license), and normalised for Instagram. Result: 21.2 s. The first mix had effects on every beat; the owner found it too busy, and the whoosh and paper sounds read as pages turning, so only these three stay: the stamp thud (3.6 s), a soft hit on the CTA (16.5 s) and a ding on «جاهز ✓» (20.15 s).
 
+**Music:** an original bed composed in `audio.py` (no samples, so nothing to license): A minor, 100 BPM, Am–F–C–G, landing on C under the closing ding. A soft pad from the start, a piano-like arpeggio from step 1 (4.85 s), a soft kick from step 2 (9.6 s) to 19.2 s, then it rings out. It sits about 14 dB under the voice and dips further whenever the voice speaks. No noise-based sounds.
+
 | Reel time | Voice | Picture | Sound |
 | --- | --- | --- | --- |
 | 0 to 3.1 | مشروع تخرجك… ياخذ منك فصل كامل؟ | Plan slams in; week pills tick red; words appear as spoken; punch zoom on «كامل؟» | None |
