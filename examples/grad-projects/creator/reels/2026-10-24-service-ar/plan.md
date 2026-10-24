@@ -34,16 +34,16 @@ Faceless, built in code (built-in engine). Voice: the owner. Sound: no music, or
 
 ## 5. Build (v2: motion, sound effects, real report)
 
-**Soundtrack** (`build/audio.py`): the narration (`assets/voice.mp3`, 18.3 s) is cut at its own pauses and gaps are opened at the key moments, then mixed with sound effects that are synthesized in the script (no samples, nothing to license), and normalised for Instagram. Result: 21.2 s.
+**Soundtrack** (`build/audio.py`): the narration (`assets/voice.mp3`, 18.3 s) is cut at its own pauses and gaps are opened at the key moments, then mixed with three synthesized sound effects (no samples, nothing to license), and normalised for Instagram. Result: 21.2 s. The first mix had effects on every beat; the owner found it too busy, and the whoosh and paper sounds read as pages turning, so only these three stay: the stamp thud (3.6 s), a soft hit on the CTA (16.5 s) and a ding on «جاهز ✓» (20.15 s).
 
 | Reel time | Voice | Picture | Sound |
 | --- | --- | --- | --- |
-| 0 to 3.1 | مشروع تخرجك… ياخذ منك فصل كامل؟ | Plan slams in; week pills tick red; words appear as spoken; punch zoom on «كامل؟» | Thud, five ticks |
-| 3.1 to 4.85 | خلّيه علينا (3.8) | Stamp at 3.6 with a flash and camera shake | Rising whoosh into a heavy stamp |
-| 4.85 to 9.2 | نبني مشروعك كامل… برمجة، تصميم، واختبار | Step 1 slides in; a browser IDE and a mobile app fly over the plan (5.05 to 7.0, labelled «مشاريع نبنيها»); then the rows flip on their words (7.05, 7.25, 7.85, 8.45) | Whooshes, pops rising in pitch |
-| 9.2 to 12.7 | ونكتب التقرير كامل، بتنسيق جامعتك | Report row flips (9.9); the real report's contents page slides up over half the plan, labelled «من شغلنا»; a highlighter sweeps "Chapter One" (10.85) | Pop, paper, marker |
-| 12.7 to 15.75 | ونجهّزك للمناقشة… نشرح لك كل جزء | Defence row slides in (12.8); a defence slide deck flies in (13.05 to 15.5) | Pops, whoosh |
-| 15.75 to 21.2 | اكتب «مشروع» بالتعليقات… وانطيك التفاصيل والسعر | Riser, then the CTA hits at 16.5 with a flash and shake; «مشروع» pulses (17.1); «جاهز ✓» stamp and confetti (20.15) | Riser, big hit, pop, ding + sparkles |
+| 0 to 3.1 | مشروع تخرجك… ياخذ منك فصل كامل؟ | Plan slams in; week pills tick red; words appear as spoken; punch zoom on «كامل؟» | None |
+| 3.1 to 4.85 | خلّيه علينا (3.8) | Stamp at 3.6 with a flash and camera shake | Stamp thud |
+| 4.85 to 9.2 | نبني مشروعك كامل… برمجة، تصميم، واختبار | Step 1 slides in; a browser IDE and a mobile app fly over the plan (5.05 to 7.0, labelled «مشاريع نبنيها»); then the rows flip on their words (7.05, 7.25, 7.85, 8.45) | None |
+| 9.2 to 12.7 | ونكتب التقرير كامل، بتنسيق جامعتك | Report row flips (9.9); the real report's contents page slides up over half the plan, labelled «من شغلنا»; a highlighter sweeps "Chapter One" (10.85) | None |
+| 12.7 to 15.75 | ونجهّزك للمناقشة… نشرح لك كل جزء | Defence row slides in (12.8); a defence slide deck flies in (13.05 to 15.5) | None |
+| 15.75 to 21.2 | اكتب «مشروع» بالتعليقات… وانطيك التفاصيل والسعر | Riser, then the CTA hits at 16.5 with a flash and shake; «مشروع» pulses (17.1); «جاهز ✓» stamp and confetti (20.15) | Soft hit at 16.5, ding at 20.15 |
 
 - The app screens are built in code (`build/reel.html`), not copied from the internet: original, so nothing to license, and they match the kind of project in the report. Swap in screenshots of the page's real past projects when there are some.
 - The report page (`build/assets/report-toc.jpg`) is the owner's own work.

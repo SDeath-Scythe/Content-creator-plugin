@@ -125,26 +125,9 @@ def sparkle():
 
 # --- the timeline (seconds in the reel) ----------------------------------------------------------
 SFX = [
-    (0.00, thud()),                                   # the plan slams in
-    *[(0.35 + k * 0.22, tick()) for k in range(5)],   # the week pills tick red
-    (3.05, whoosh(0.55, rise=True)),                  # wind-up to the stamp
-    (3.60, thud(0.7, big=True)),                      # «خلّيه علينا» stamp
-    (4.85, whoosh(0.45)),                             # into step 1
-    (5.05, whoosh(0.35)), (5.28, pop(700, 220, 0.12, 0.45)),   # IDE window slams in
-    (5.65, pop(1100, 380, 0.1, 0.4)),                 # phone pops in
-    (6.92, whoosh(0.4)),                              # screens fly out
-    (7.05, pop(600, 300)), (7.25, pop(700, 350)), (7.85, pop(800, 400)), (8.45, pop(900, 450)),  # rows flip
-    (9.22, whoosh(0.45)),                             # into step 2
-    (9.90, pop(950, 420, 0.1, 0.5)),                  # report row flips
-    (10.30, paper()),                                 # the real report slides in
-    (10.85, marker()),                                # highlighter sweep
-    (12.55, whoosh(0.35)),                            # report out
-    (12.80, pop(800, 380)), (13.10, pop(1200, 500, 0.1, 0.35)),   # defence row, slide card
-    (15.45, whoosh(0.35)),                            # slide out
-    (15.75, riser(0.75)),                             # build-up to the CTA
-    (16.50, thud(0.6, big=True)),                     # CTA hits
-    (17.10, pop(1300, 600, 0.1, 0.4)),                # «مشروع» chip pulses
-    (20.15, thud(0.5)), (20.15, ding()), (20.20, sparkle()),   # «جاهز ✓» + confetti
+    (3.60, thud(0.7, big=True)),     # «خلّيه علينا» stamp
+    (16.50, thud(0.5)),              # the CTA appears
+    (20.15, ding()),                 # «جاهز ✓»
 ]
 
 
@@ -162,7 +145,7 @@ def main(voice_path, out_path):
     sfx = np.zeros_like(vtrack)
     for at, clip in SFX:
         place(sfx, at, clip.astype(np.float32))
-    mix = vtrack + sfx * 0.55
+    mix = vtrack + sfx * 0.4
     mix /= max(1.0, np.abs(mix).max() / 0.95)
     with wave.open(out_path, "wb") as w:
         w.setnchannels(1)
