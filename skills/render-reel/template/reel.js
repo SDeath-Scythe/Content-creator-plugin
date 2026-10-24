@@ -20,6 +20,7 @@
 
   const captions = JSON.parse(document.getElementById("captions-data")?.textContent || "[]");
   const captionEl = document.getElementById("captions");
+  if (captions.length) root.classList.add("has-captions");
 
   // Index each word of a .words claim so the stagger works without hand-written delays
   for (const claim of document.querySelectorAll(".words")) {

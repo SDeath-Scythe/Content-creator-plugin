@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Arabic reel template (right to left). For English, see reel-en.html.
+<!-- Arabic reel template (right to left). For English, see reel-en.html. Digits and currency as set in creator/page.md.
      Replace the sample scenes with the script from plan.md: one .scene per beat, timed with data-start/data-end.
      Keep text inside .safe. The hook scene must move from frame 0 and land its claim at about 1.2 to 1.6 s. -->
 <html lang="ar" dir="rtl">
@@ -8,7 +8,12 @@
   <meta name="reel-duration" content="20">
   <meta name="reel-fps" content="30">
   <title>reel</title>
+  <!-- reel.css, reel.js and fonts/ come from the plugin when they aren't next to this file -->
   <link rel="stylesheet" href="reel.css">
+  <style>
+    /* The page's look, from creator/page.md */
+    :root { --bg: #0B1F3A; --fg: #FFFFFF; --accent: #FFC93C; }
+  </style>
 </head>
 <body>
   <div class="stage">

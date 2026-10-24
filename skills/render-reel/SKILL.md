@@ -38,7 +38,8 @@ Check what's there (`node --version`, `ffmpeg -version`) before choosing. Say wh
 
 - **Voice:** the user's recording in `assets/` (ask for it if missing). ElevenLabs only if `plan.md` says so: generate with the ElevenLabs tools, save to `assets/voice.mp3`, and tell the user it's AI voice. Trim leading silence so the first word lands within 0.5 s.
 - **Music:** only a bed the user has rights to, or ElevenLabs music (commercial use needs a paid ElevenLabs plan). Under the voice and ducked while it speaks. If `plan.md` says "trending sound, add in app", render with no music.
-- **Captions:** time them to the voice, not to the script. Get word or line timings from a transcript: HyperFrames' `transcribe`, ElevenLabs speech to text, or local `faster-whisper`. If none works, time them by ear from the waveform and say so. Captions go in the safe area, never over the hook's claim.
+- **Captions:** time them to the voice, not to the script. Get word or line timings from a transcript: HyperFrames' `transcribe`, ElevenLabs speech to text, or local `faster-whisper`. If none works, time them by ear from the waveform and say so. With no voice yet, time them to the script's lines and mark the build "captions to re-time after the voice is recorded". Captions go in the safe area, never over the hook's claim.
+- **No sound at all:** the renderer adds a silent track. Record in the Build section that the reel still needs a voice or an in-app sound before it can be approved.
 
 ## 4. Build
 
@@ -48,11 +49,11 @@ Check what's there (`node --version`, `ffmpeg -version`) before choosing. Say wh
 
 **Built-in:**
 
-1. Copy `${CLAUDE_SKILL_DIR}/template/` into `<reel>/build/` (`reel.html` for Arabic, `reel-en.html` for English, plus `reel.css` and `reel.js`), and copy `${CLAUDE_PLUGIN_ROOT}/assets/fonts/` to `<reel>/build/fonts/`.
-2. Set the look in `reel.css`'s `:root`, the duration in the `reel-duration` meta tag, and write one `.scene` per beat of the script with `data-start` and `data-end`. Use the motion presets (`slam` for the frame-0 element, `words` for a claim landing word by word, `rise`, `pop`). Put the caption timings in `#captions-data`.
+1. Read `${CLAUDE_SKILL_DIR}/template/reel.html` (Arabic) or `reel-en.html` (English) and write your version to `<reel>/build/reel.html`. That file is all the build folder needs: the renderer serves `reel.css`, `reel.js` and `fonts/` from the plugin when they aren't next to it. Copy `reel.css` in only if you need to change more than the variables.
+2. Set the look in the `<style>` block's `:root` (colours from `page.md`; any `reel.css` variable can be overridden there), the duration in the `reel-duration` meta tag, and write one `.scene` per beat of the script with `data-start` and `data-end`. Use the motion presets (`slam` for the frame-0 element, `words` for a claim landing word by word, `rise`, `pop`). Animation delays count from the scene's own start. No scene opens empty: its first element is fully in within 0.2 s. Put the caption timings in `#captions-data`. Extra assets (screenshots, footage) go in `<reel>/build/` next to `reel.html`.
 3. Check stills before rendering (fast):
    `node ${CLAUDE_SKILL_DIR}/scripts/render.mjs <reel>/build/reel.html <reel>/build/stills --stills 0,0.5,1,1.5,2,3`
-   Open `reel.html?guides=1&t=1.5` in a browser to see the safe area shaded, if the user wants to look.
+   Add `--guides` to shade the areas Instagram covers in red.
 4. Render:
    `node ${CLAUDE_SKILL_DIR}/scripts/render.mjs <reel>/build/reel.html <reel>/out/reel.mp4 --voice <voice> --music <bed> --cover <reel>/out/cover.jpg`
    Add `--draft` for a fast low-quality pass while iterating. About 4 seconds of render time per second of video.
@@ -67,7 +68,7 @@ Before the final render, run the `impeccable` skill's critique on the compositio
 python3 ${CLAUDE_SKILL_DIR}/scripts/check_spec.py <reel>/out/reel.mp4 --platforms instagram,tiktok,youtube --frames <reel>/out/frames
 ```
 
-Use the platforms from `page.md`. It fails on hard limits (codec, frame rate, length, size, moov atom) and writes frames at 0, 0.5, 1, 1.5, 2, 3 s and the end. Look at those frames against the hook plan: frame 0 moving and readable, claim by 1.6 s, nothing outside the safe area, captions in sync. Fix and re-render until the check passes and the frames match.
+Use the platforms from `page.md`. It fails on hard limits (codec, frame rate, length, size, moov atom) and writes frames named by time (`t000.00.png` …) at 0, 0.5, 1, 1.5, 2, 3 s, plus the last frame 0.1 s before the end. Look at those frames against the hook plan: frame 0 moving and readable, claim by 1.6 s, nothing outside the safe area, captions in sync. Fix and re-render until the check passes and the frames match.
 
 If a platform needs different framing (TikTok-first safe area) or a different end card, render a separate file per platform: `out/instagram.mp4`, `out/tiktok.mp4`. Otherwise one `out/reel.mp4` serves all.
 

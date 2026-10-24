@@ -9,7 +9,8 @@ Written by `page-setup`. Every content-creator skill reads this file first. Edit
 <!-- One sentence each. Full detail lives in brand-profile.md and audience.md. -->
 
 ## Language
-<!-- arabic, english or both. If both: which goes on screen, which is spoken, which in captions. -->
+<!-- arabic, english or both. If both: which goes on screen, which is spoken, which in captions.
+     For Arabic: dialect, digits (Western 0-9 or Arabic-Indic ٠-٩) and currency as written (e.g. ريال). -->
 
 ## Platforms
 <!-- instagram, tiktok, youtube. Handle for each. -->
@@ -21,7 +22,8 @@ Written by `page-setup`. Every content-creator skill reads this file first. Edit
 <!-- Local time zone and the hour the audience is most active. Only post when you can reply for 30 to 60 minutes. -->
 
 ## Call to action
-<!-- The comment keyword (if any) and the real thing the DM delivers. Rotate with follow and save CTAs. -->
+<!-- The comment keyword (if any), the variants also accepted (e.g. سعر and PRICE), the real thing the DM
+     delivers, and who sends it. Rotate with follow and save CTAs. -->
 
 ## Look
 <!-- Brand colours (hex), fonts, cover style. Used by render-reel. -->
