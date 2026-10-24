@@ -3,3 +3,7 @@ out/
 *.mp4
 .DS_Store
 __pycache__/
+
+# Example runs keep their rendered output
+!examples/**/out/
+!examples/**/*.mp4

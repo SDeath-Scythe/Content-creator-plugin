@@ -1,0 +1,28 @@
+{
+  "file": "out/reel.mp4",
+  "duration_s": 15.0,
+  "size_mb": 3.02,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30.0,
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "moov_first": true,
+  "frames": [
+    "out/frames/t000.00.png",
+    "out/frames/t000.50.png",
+    "out/frames/t001.00.png",
+    "out/frames/t001.50.png",
+    "out/frames/t002.00.png",
+    "out/frames/t003.00.png",
+    "out/frames/t014.90.png"
+  ],
+  "platforms": [
+    "instagram",
+    "tiktok",
+    "youtube"
+  ],
+  "ok": true,
+  "fails": [],
+  "warnings": []
+}
