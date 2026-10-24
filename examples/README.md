@@ -4,7 +4,7 @@ Output from test runs of content-creator, on made-up pages. Nothing here was pos
 
 | Example | Page | What it shows |
 | --- | --- | --- |
-| [grad-projects](grad-projects/creator) | Helping students build their graduation project, and write the report | Two 15 s English reels taken through the reel pipeline: [project plan](grad-projects/creator/reels/2026-10-24-project-plan) (the main topic) and [report order](grad-projects/creator/reels/2026-10-24-report-order). Each folder has the plan (goal, 3 hooks on the 8-point check, script, captions, approval card), the build and the rendered MP4 + cover |
+| [grad-projects](grad-projects/creator) | Helping students build their graduation project, and write the report | Three 15 s reels taken through the reel pipeline: [project plan](grad-projects/creator/reels/2026-10-24-project-plan) (the main topic), its [Arabic version](grad-projects/creator/reels/2026-10-24-project-plan-ar), and [report order](grad-projects/creator/reels/2026-10-24-report-order). Each folder has the plan (goal, 3 hooks on the 8-point check, script, captions, approval card), the build and the rendered MP4 + cover |
 | [freelance-pricing](freelance-pricing/creator) | Pricing for freelance designers in the Gulf (Arabic) | A full dry run by a separate Claude session: page-setup's files, a scored idea bank, and a 29 s Arabic reel through to the approval card |
 
 To re-render a reel from its build folder:
