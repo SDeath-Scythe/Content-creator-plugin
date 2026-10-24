@@ -1,6 +1,6 @@
 # Reel (Arabic): مشروع تخرجك ياخذ منك فصل كامل؟
 
-Status: built and checked; not posted. Needs the owner's voiceover before approval. The page's lead reel: it sells the service (we build the project and write the report).
+Status: built with the ElevenLabs narration and checked; not posted. The page's lead reel: it sells the service (we build the project and write the report).
 
 ## 1. Goal
 **Leads.** The emotion: relief. "A whole semester of work, and someone else can carry it."
@@ -33,9 +33,12 @@ Read the voiceover aloud and change any word that doesn't sound like you. On-scr
 Faceless, built in code (built-in engine). Voice: the owner. Sound: no music, or a licensed bed under the voice. Cover: the hook over the plan with the «خلّيه علينا» stamp.
 
 ## 5. Build
-- `build/reel.html` (hand-written; no generator needed since rows don't move).
-- Spec check (`out/spec.json`): **ok**. 15.0 s, 1080×1920, 30 fps, H.264 + AAC (silent), 2.6 MB.
-- Frames: `out/frames.png` at 0, 0.8, 1.7, 2.6, 4, 5, 7, 10.2, 13.5 s and the cover.
+- Voice: `assets/voice.mp3`, generated in ElevenLabs (Iraqi Arabic voice, with emotion tags), 18.3 s. The reel was stretched from 15 s to 18.4 s to fit it instead of speeding the voice up.
+- Timing comes from the voice's pauses: the hook words appear as they're spoken (0 to 2.5 s), the «خلّيه علينا» stamp lands at 3.3 s on those words, the build rows flip on «نبني» 4.6, «برمجة» 6.15, «تصميم» 6.85, «اختبار» 7.45, the report row on «ونكتب التقرير» 8.4, defence prep slides in on «ونجهّزك» 11.3, and the CTA runs 14.5 to 18.4.
+- `build/reel.html` (hand-written; rows flip rather than move). Render: `node skills/render-reel/scripts/render.mjs build/reel.html out/reel.mp4 --voice assets/voice.mp3 --cover out/cover.jpg`.
+- Spec check (`out/spec.json`): **ok**. 18.4 s, 1080×1920, 30 fps, H.264 + AAC, 3.4 MB, moov first.
+- Frames: `out/frames.png` at 0.3, 1.6, 2.6, 3.5, 4.9, 6.5, 7.8, 8.9, 11.7, 16.8 s and the cover.
+- No burned-in captions: the on-screen steps already carry each line, so the reel works on mute.
 
 ## 6. Instagram caption
 ```
@@ -51,7 +54,7 @@ Faceless, built in code (built-in engine). Voice: the owner. Sound: no music, or
 ```
 
 ## 7. Approval card
-`out/reel.mp4`, 15.0 s, 1080×1920, 2.6 MB, cover `out/cover.jpg`, manual route, trial reel recommended. **Not ready to post** until the voice is in.
+`out/reel.mp4`, 18.4 s, 1080×1920, 3.4 MB, cover `out/cover.jpg`, manual route, trial reel recommended. Ready for the owner's yes. The voice is AI-generated: generate it on a paid ElevenLabs plan for commercial use.
 
 ## Note on the offer
 Universities treat submitting work someone else did as misconduct, and some countries have laws against "contract cheating" services. The reel only promises what the page delivers: no grade guarantees, no claims about passing. Defence prep is part of the offer because the student still has to present and defend the project.

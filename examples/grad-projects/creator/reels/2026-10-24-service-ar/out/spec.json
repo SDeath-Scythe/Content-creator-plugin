@@ -1,7 +1,7 @@
 {
   "file": "out/reel.mp4",
-  "duration_s": 15.0,
-  "size_mb": 2.61,
+  "duration_s": 18.4,
+  "size_mb": 3.41,
   "width": 1080,
   "height": 1920,
   "fps": 30.0,
@@ -15,7 +15,7 @@
     "out/frames/t001.50.png",
     "out/frames/t002.00.png",
     "out/frames/t003.00.png",
-    "out/frames/t014.90.png"
+    "out/frames/t018.30.png"
   ],
   "platforms": [
     "instagram",

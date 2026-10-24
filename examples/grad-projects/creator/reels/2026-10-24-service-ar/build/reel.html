@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- Graduation project service reel, 15 s, Arabic (right to left). The page builds the project and writes the report
+<!-- Graduation project service reel, 18.4 s with ElevenLabs narration, Arabic (right to left). The page builds the project and writes the report
      for the student. The student's semester plan flips, row by row, to «علينا». -->
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <meta name="reel-duration" content="15">
+  <meta name="reel-duration" content="18.4">
   <meta name="reel-fps" content="30">
   <title>reel</title>
   <!-- reel.css, reel.js and fonts/ come from the plugin when they aren't next to this file -->
@@ -53,8 +53,8 @@
     .after { animation: swap-in .4s cubic-bezier(.2, .9, .3, 1.3) both; }
     @keyframes swap-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-30px); } }
     @keyframes swap-in { from { opacity: 0; transform: translateY(30px) scale(.9); } to { opacity: 1; transform: none; } }
-    /* The sixth row (defence prep) slides in at 9.2 s */
-    .row.extra { animation: hl 2.4s linear both, appear .45s cubic-bezier(.2, .9, .3, 1.2) both; animation-delay: 9.2s, 9.2s; }
+    /* The sixth row (defence prep) slides in at 11.3 s, on «ونجهّزك للمناقشة» */
+    .row.extra { animation: hl 2.4s linear both, appear .45s cubic-bezier(.2, .9, .3, 1.2) both; animation-delay: 11.3s, 11.3s; }
     @keyframes appear { from { opacity: 0; transform: translateX(-120px); } to { opacity: 1; transform: none; } }
 
     /* Stamps */
@@ -64,6 +64,13 @@
              animation: stamp .28s cubic-bezier(.3, 1.6, .5, 1) both; }
     @keyframes stamp { from { opacity: 0; transform: rotate(12deg) scale(2.4); } to { opacity: 1; transform: rotate(8deg) scale(1); } }
 
+    /* Hook words land as they're spoken (voice: مشروع 0.0, تخرجك 0.6, ياخذ 1.5, منك 1.85, فصل 2.15, كامل 2.45) */
+    .hook.words > span:nth-child(1) { animation-delay: .05s; }
+    .hook.words > span:nth-child(2) { animation-delay: .55s; }
+    .hook.words > span:nth-child(3) { animation-delay: 1.5s; }
+    .hook.words > span:nth-child(4) { animation-delay: 1.85s; }
+    .hook.words > span:nth-child(5) { animation-delay: 2.15s; }
+    .hook.words > span:nth-child(6) { animation-delay: 2.45s; }
     .cta-word { display: inline-block; background: var(--accent); color: var(--bg); padding: 0 22px; border-radius: 16px; }
 
     /* Cover: the plan sits still under the hook, with the stamp */
@@ -81,38 +88,38 @@
       <div class="doc-label">مشروع التخرج</div>
       <div class="doc-title">خطة الفصل الدراسي</div>
       <ol class="plan">
-        <li class="row" style="animation-delay: 3.2s"><span class="before" style="--k: 0; animation-delay: 3.2s"><span class="pill">أسبوع <bdi dir="ltr">1–4</bdi></span><span class="text">تتعلم كل التقنيات</span></span><span class="after" style="animation-delay: 3.2s"><span class="pill">علينا</span><span class="text">البرمجة والتقنيات</span></span></li>
-        <li class="row" style="animation-delay: 3.6s"><span class="before" style="--k: 1; animation-delay: 3.6s"><span class="pill">أسبوع <bdi dir="ltr">5–7</bdi></span><span class="text">تصمم كل الشاشات</span></span><span class="after" style="animation-delay: 3.6s"><span class="pill">علينا</span><span class="text">التصميم</span></span></li>
-        <li class="row" style="animation-delay: 4.0s"><span class="before" style="--k: 2; animation-delay: 4.0s"><span class="pill">أسبوع <bdi dir="ltr">8–12</bdi></span><span class="text">تبني كل شيء</span></span><span class="after" style="animation-delay: 4.0s"><span class="pill">علينا</span><span class="text">بناء المشروع كامل</span></span></li>
-        <li class="row" style="animation-delay: 4.4s"><span class="before" style="--k: 3; animation-delay: 4.4s"><span class="pill">أسبوع <bdi dir="ltr">13</bdi></span><span class="text">تختبر المشروع</span></span><span class="after" style="animation-delay: 4.4s"><span class="pill">علينا</span><span class="text">الاختبار</span></span></li>
-        <li class="row report" style="animation-delay: 6.3s"><span class="before" style="--k: 4; animation-delay: 6.3s"><span class="pill">أسبوع <bdi dir="ltr">14–15</bdi></span><span class="text">تكتب تقرير 80 صفحة</span></span><span class="after" style="animation-delay: 6.3s"><span class="pill">علينا</span><span class="text">التقرير كامل</span></span></li>
+        <li class="row" style="animation-delay: 6.15s"><span class="before" style="--k: 0; animation-delay: 6.15s"><span class="pill">أسبوع <bdi dir="ltr">1–4</bdi></span><span class="text">تتعلم كل التقنيات</span></span><span class="after" style="animation-delay: 6.15s"><span class="pill">علينا</span><span class="text">البرمجة والتقنيات</span></span></li>
+        <li class="row" style="animation-delay: 6.85s"><span class="before" style="--k: 1; animation-delay: 6.85s"><span class="pill">أسبوع <bdi dir="ltr">5–7</bdi></span><span class="text">تصمم كل الشاشات</span></span><span class="after" style="animation-delay: 6.85s"><span class="pill">علينا</span><span class="text">التصميم</span></span></li>
+        <li class="row" style="animation-delay: 4.6s"><span class="before" style="--k: 2; animation-delay: 4.6s"><span class="pill">أسبوع <bdi dir="ltr">8–12</bdi></span><span class="text">تبني كل شيء</span></span><span class="after" style="animation-delay: 4.6s"><span class="pill">علينا</span><span class="text">بناء المشروع كامل</span></span></li>
+        <li class="row" style="animation-delay: 7.45s"><span class="before" style="--k: 3; animation-delay: 7.45s"><span class="pill">أسبوع <bdi dir="ltr">13</bdi></span><span class="text">تختبر المشروع</span></span><span class="after" style="animation-delay: 7.45s"><span class="pill">علينا</span><span class="text">الاختبار</span></span></li>
+        <li class="row report" style="animation-delay: 8.4s"><span class="before" style="--k: 4; animation-delay: 8.4s"><span class="pill">أسبوع <bdi dir="ltr">14–15</bdi></span><span class="text">تكتب تقرير 80 صفحة</span></span><span class="after" style="animation-delay: 8.4s"><span class="pill">علينا</span><span class="text">التقرير كامل</span></span></li>
         <li class="row extra"><span class="after" style="animation: none"><span class="pill">علينا</span><span class="text">تجهيزك للمناقشة</span></span></li>
       </ol>
     </div>
 
-    <!-- 0 to 3 s: hook. Plan slams in at frame 0; week pills tick red 0.35 to 1.5 s; claim from 1.0 s; stamp at 2.3 s -->
-    <section class="scene" data-start="0" data-end="3">
+    <!-- 0 to 4.4 s: hook. Plan slams in at frame 0; the question appears word by word with the voice; stamp on «خلّيه علينا» at 3.3 s -->
+    <section class="scene" data-start="0" data-end="4.4">
       <div class="top">
         <p class="hook big words" style="--from: 1.0s; --stagger: .1s">مشروع تخرجك ياخذ منك فصل كامل؟</p>
       </div>
-      <div class="stamp" style="animation-delay: 2.3s">خلّيه علينا</div>
+      <div class="stamp" style="animation-delay: 3.3s">خلّيه علينا</div>
     </section>
 
-    <section class="scene" data-start="3" data-end="6">
+    <section class="scene" data-start="4.4" data-end="8.2">
       <div class="top">
         <p class="step rise"><span class="n">1.</span> نبني مشروعك كامل</p>
         <p class="body rise muted" style="animation-delay: .15s">برمجة، تصميم واختبار.</p>
       </div>
     </section>
 
-    <section class="scene" data-start="6" data-end="9">
+    <section class="scene" data-start="8.2" data-end="11.1">
       <div class="top">
         <p class="step rise"><span class="n">2.</span> ونكتب التقرير كامل</p>
         <p class="body rise muted" style="animation-delay: .15s">بتنسيق جامعتك ومع المراجع.</p>
       </div>
     </section>
 
-    <section class="scene" data-start="9" data-end="12">
+    <section class="scene" data-start="11.1" data-end="14.5">
       <div class="top">
         <p class="step rise"><span class="n">3.</span> ونجهّزك للمناقشة</p>
         <p class="body rise muted" style="animation-delay: .15s">نشرح لك كل جزء حتى تدافع عنه بثقة.</p>
@@ -120,12 +127,12 @@
     </section>
 
     <!-- CTA: the page goal is leads (enquiries for the service) -->
-    <section class="scene" data-start="12" data-end="15">
+    <section class="scene" data-start="14.5" data-end="18.4">
       <div class="top">
         <p class="step pop">اكتب <span class="cta-word">مشروع</span> بالتعليقات</p>
         <p class="body rise muted" style="animation-delay: .2s">ونرسل لك التفاصيل والسعر.</p>
       </div>
-      <div class="stamp" style="animation-delay: .35s">جاهز ✓</div>
+      <div class="stamp" style="animation-delay: 2.2s">جاهز ✓</div>
     </section>
 
     <section class="cover">
